@@ -1,9 +1,9 @@
-import { Routes, Route } from "react-router-dom";
+﻿import { Routes, Route } from "react-router-dom";
 
-import Home from "../pages/Home";
-import About from "../pages/About";
-import Dashboard from "../pages/Dashboard";
-import Login from "../pages/Login";
+import Home from "../pages/Home/Home";
+import About from "../pages/About/About";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import Login from "../pages/Login/Login";
 
 function AppRouter() {
   return (

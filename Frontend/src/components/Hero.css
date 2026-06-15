@@ -1,0 +1,132 @@
+﻿.hero{
+
+    width:100%;
+    height:100vh;
+
+    background-image:url("../../assets/images/hero.jpg");
+
+    background-size:cover;
+    background-position:center;
+
+    position:relative;
+
+    display:flex;
+    align-items:center;
+
+}
+
+.hero-overlay{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.45);
+}
+
+.hero-content{
+
+    width:85%;
+    margin:auto;
+
+    position:relative;
+    z-index:2;
+
+    color:white;
+
+    max-width:700px;
+}
+
+.hero-content h1{
+
+    font-size:60px;
+    line-height:75px;
+    margin-bottom:25px;
+}
+
+.hero-content p{
+
+    font-size:20px;
+    line-height:35px;
+    margin-bottom:40px;
+}
+
+.hero-buttons{
+
+    display:flex;
+    gap:20px;
+}
+
+.primary-btn{
+
+    padding:15px 35px;
+
+    border:none;
+
+    background:#2e7d32;
+
+    color:white;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+}
+
+.primary-btn:hover{
+
+    background:#1b5e20;
+}
+
+.secondary-btn{
+
+    padding:15px 35px;
+
+    border:2px solid white;
+
+    background:transparent;
+
+    color:white;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:16px;
+
+    transition:.3s;
+}
+
+.secondary-btn:hover{
+
+    background:white;
+    color:black;
+}
+
+@media(max-width:768px){
+
+.hero-content h1{
+
+font-size:40px;
+line-height:55px;
+
+}
+
+.hero-content p{
+
+font-size:18px;
+line-height:30px;
+
+}
+
+.hero-buttons{
+
+flex-direction:column;
+
+}
+
+}

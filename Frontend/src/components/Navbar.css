@@ -1,0 +1,106 @@
+﻿.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.navbar-container{
+    width:90%;
+    margin:auto;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    height:75px;
+}
+
+.logo{
+
+    text-decoration:none;
+    font-size:30px;
+    color:#2e7d32;
+    font-weight:bold;
+}
+
+.nav-links{
+
+    display:flex;
+    gap:35px;
+}
+
+.nav-links a{
+
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+}
+
+.nav-links a:hover{
+
+    color:#2e7d32;
+}
+
+.nav-right{
+
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.search-box{
+
+    padding:10px 15px;
+    border-radius:25px;
+    border:1px solid #ddd;
+    outline:none;
+}
+
+.cart-btn{
+
+    border:none;
+    background:none;
+    font-size:22px;
+    cursor:pointer;
+}
+
+.login-btn{
+
+    background:#2e7d32;
+    color:white;
+
+    border:none;
+
+    padding:10px 22px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+
+    background:#1b5e20;
+}
+
+@media(max-width:768px){
+
+.nav-links{
+
+display:none;
+
+}
+
+.search-box{
+
+display:none;
+
+}
+
+}
