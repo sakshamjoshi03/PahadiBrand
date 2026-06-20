@@ -1,9 +1,10 @@
-﻿import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import Home from "../pages/Home/Home";
+import Home from "../pages/Home";
 import About from "../pages/About/About";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Login from "../pages/Login/Login";
+import Login from "../pages/Login";
+import Signup from "../pages/Signup";
 
 function AppRouter() {
   return (
@@ -12,6 +13,7 @@ function AppRouter() {
       <Route path="/about" element={<About />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
     </Routes>
   );
 }
