@@ -9,24 +9,24 @@
   align-items: center;
   box-sizing: border-box;
   padding: 100px 20px 40px;
-  /* offset the top navbar */
   position: relative;
 }
 
-/* Semi-transparent dark overlay to match mockup's rich feel */
+/* Background Overlay */
 .login-container::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.2);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
   z-index: 1;
 }
 
+/* Login Card */
+
 .login-card {
-  background: white;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border);
   border-radius: 20px;
   width: 100%;
   max-width: 440px;
@@ -38,19 +38,20 @@
 }
 
 .login-card h2 {
-  color: #2e7d32;
+  color: var(--primary);
   font-size: 32px;
   font-weight: 700;
-  margin-top: 0;
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 }
 
 .login-subtitle {
-  color: #666;
+  color: var(--secondary);
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 30px;
 }
+
+/* Form */
 
 .login-form {
   display: flex;
@@ -66,23 +67,31 @@
   width: 100%;
   padding: 14px 18px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
   outline: none;
   font-size: 14px;
   box-sizing: border-box;
-  transition: border-color 0.3s;
+  transition: .3s;
+}
+
+.form-group input::placeholder {
+  color: var(--secondary);
 }
 
 .form-group input:focus {
-  border-color: #2e7d32;
+  border-color: var(--primary);
 }
+
+/* Remember / Forgot */
 
 .form-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 13px;
-  color: #555;
+  color: var(--secondary);
   margin-top: 4px;
 }
 
@@ -99,7 +108,7 @@
 }
 
 .forgot-password {
-  color: #2e7d32;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 600;
 }
@@ -108,43 +117,54 @@
   text-decoration: underline;
 }
 
+/* Login Button */
+
 .login-submit-btn {
-  background: #2e7d32;
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s;
   width: 100%;
   margin-top: 10px;
+  padding: 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: var(--primary);
+  color: white;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: .3s;
 }
 
 .login-submit-btn:hover {
-  background: #1b5e20;
+  filter: brightness(.9);
+  transform: translateY(-2px);
 }
+
+/* Footer */
 
 .login-footer {
   margin-top: 25px;
+  color: var(--secondary);
   font-size: 14px;
-  color: #555;
 }
 
 .signup-link {
-  color: #2E7D32;
-  font-weight: 600;
+  color: var(--primary);
   text-decoration: none;
-  transition: 0.3s;
+  font-weight: 600;
 }
 
 .signup-link:hover {
   text-decoration: underline;
-  color: #1B5E20;
 }
 
-@media (max-width: 480px) {
+/* Mobile */
+
+@media (max-width:480px) {
+
   .login-card {
     padding: 30px 20px;
   }
@@ -152,4 +172,6 @@
   .login-card h2 {
     font-size: 28px;
   }
+
 }
+

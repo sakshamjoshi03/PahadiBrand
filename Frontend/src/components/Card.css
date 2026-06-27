@@ -1,4 +1,4 @@
-﻿.card{
+.card{
 
     background:white;
 
@@ -127,3 +127,33 @@
 
     color:white;
 }
+
+/* =========================================
+            DARK THEME OVERRIDES
+========================================= */
+
+body[data-theme="dark"] .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .4);
+}
+
+body[data-theme="dark"] .card-content p {
+    color: var(--secondary);
+}
+
+body[data-theme="dark"] .card-content button {
+    background: transparent;
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+body[data-theme="dark"] .card-content button:hover {
+    background: var(--primary);
+    color: #121212;
+}
+
+body[data-theme="dark"] .product-tag {
+    background: var(--hover);
+    color: var(--primary);
+}

@@ -6,14 +6,35 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 
-function AppRouter() {
+function AppRouter({ darkMode }) {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+
+      <Route
+        path="/"
+        element={<Home darkMode={darkMode} />}
+      />
+
+      <Route
+        path="/about"
+        element={<About darkMode={darkMode} />}
+      />
+
+      <Route
+        path="/dashboard"
+        element={<Dashboard darkMode={darkMode} />}
+      />
+
+      <Route
+        path="/login"
+        element={<Login darkMode={darkMode} />}
+      />
+
+      <Route
+        path="/signup"
+        element={<Signup darkMode={darkMode} />}
+      />
+
     </Routes>
   );
 }

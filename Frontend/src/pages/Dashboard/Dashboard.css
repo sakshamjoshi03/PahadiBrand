@@ -1,7 +1,7 @@
 .dashboard-page {
   padding: 110px 60px 50px;
   min-height: calc(100vh - 170px);
-  background: #f8faf8;
+  background: var(--bg);
 }
 
 /* Dashboard Header */
@@ -11,7 +11,7 @@
 }
 
 .dashboard-tag {
-  color: #2E7D32;
+  color: var(--primary);
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -21,7 +21,7 @@
 .dashboard-header h1 {
   font-size: 42px;
   margin-top: 8px;
-  color: #1f2937;
+  color: var(--text);
 }
 
 /* ---------- Stats Card ---------- */
@@ -37,7 +37,7 @@
 }
 
 .stats-card {
-  background: white;
+  background: var(--card);
   border-radius: 18px;
   padding: 22px;
   display: flex;
@@ -71,14 +71,14 @@
 
   font-size: 28px;
 
-  color: #1f2937;
+  color: var(--text);
 }
 
 .stats-info p {
 
   margin-top: 5px;
 
-  color: #777;
+  color: var(--secondary);
 
   font-size: 15px;
 
@@ -144,7 +144,7 @@
 
 .quick-action-card {
 
-  background: white;
+  background: var(--card);
 
   border-radius: 18px;
 
@@ -186,9 +186,9 @@
 
   border-radius: 15px;
 
-  background: #EDF7EE;
+  background: var(--hover);
 
-  color: #2E7D32;
+  color: var(--primary);
 
   display: flex;
 
@@ -200,7 +200,7 @@
 
 .quick-arrow {
 
-  color: #888;
+  color: var(--secondary);
 
   transition: .3s;
 
@@ -210,7 +210,7 @@
 
   transform: translateX(6px);
 
-  color: #2E7D32;
+  color: var(--primary);
 
 }
 
@@ -220,7 +220,7 @@
 
   font-size: 20px;
 
-  color: #1f2937;
+  color: var(--text);
 
 }
 
@@ -228,7 +228,7 @@
 
   margin-top: 8px;
 
-  color: #777;
+  color: var(--secondary);
 
   font-size: 14px;
 
@@ -274,7 +274,7 @@
 
 .product-card {
 
-  background: white;
+  background: var(--card);
 
   border-radius: 20px;
 
@@ -330,9 +330,9 @@
 
   display: inline-block;
 
-  background: #EDF7EE;
+  background: var(--hover);
 
-  color: #2E7D32;
+  color: var(--primary);
 
   font-size: 13px;
 
@@ -350,7 +350,7 @@
 
   font-size: 22px;
 
-  color: #222;
+  color: var(--text);
 
 }
 
@@ -364,7 +364,7 @@
 
   margin: 15px 0;
 
-  color: #555;
+  color: var(--secondary);
 
 }
 
@@ -380,7 +380,7 @@
 
 .product-footer h4 {
 
-  color: #2E7D32;
+  color: var(--primary);
 
   font-size: 24px;
 
@@ -398,7 +398,7 @@
 
   border-radius: 14px;
 
-  background: #2E7D32;
+  background: var(--primary);
 
   color: white;
 
@@ -416,7 +416,7 @@
 
 .product-btn:hover {
 
-  background: #256428;
+  filter: brightness(.9);
 
 }
 
@@ -462,7 +462,7 @@
 
   font-weight: 700;
 
-  color: #1f2937;
+  color: var(--text);
 
   margin-bottom: 25px;
 
@@ -480,7 +480,7 @@
 
 .update-card {
 
-  background: white;
+  background: var(--card);
 
   border-radius: 20px;
 
@@ -504,9 +504,9 @@
 
   display: inline-block;
 
-  background: #EDF7EE;
+  background: var(--hover);
 
-  color: #2E7D32;
+  color: var(--primary);
 
   padding: 6px 12px;
 
@@ -524,7 +524,7 @@
 
   font-size: 22px;
 
-  color: #222;
+  color: var(--text);
 
 }
 
@@ -532,7 +532,7 @@
 
   margin: 15px 0;
 
-  color: #666;
+  color: var(--secondary);
 
   line-height: 1.7;
 
@@ -550,7 +550,7 @@
 
   gap: 8px;
 
-  color: #2E7D32;
+  color: var(--primary);
 
   font-weight: 600;
 
@@ -571,7 +571,7 @@
 ========================================== */
 
 .welcome-card {
-  background: linear-gradient(135deg, #2e7d32, #3fa34d);
+  background: linear-gradient(135deg, var(--primary), #3fa34d);
   color: white;
   border-radius: 24px;
   padding: 40px;
@@ -603,9 +603,9 @@
 }
 
 .primary-btn {
-  background: white;
-  color: #2E7D32;
-  border: none;
+  background: var(--card);
+  color: var(--primary);
+  border: 1px solid var(--border);
   border-radius: 14px;
   padding: 14px 26px;
   font-size: 15px;
@@ -776,5 +776,14 @@
     grid-template-columns: 1fr;
 
   }
+
+}
+
+.stats-card,
+.quick-action-card,
+.product-card,
+.update-card {
+
+  border: 1px solid var(--border);
 
 }

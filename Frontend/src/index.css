@@ -1,1 +1,82 @@
-﻿body { margin: 0; font-family: system-ui, sans-serif; background: #f7fafc; color: #111827; }
+﻿/* =====================================
+            GLOBAL RESET
+===================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    transition:
+        background-color .35s ease,
+        color .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* =====================================
+            LIGHT THEME
+===================================== */
+
+:root {
+
+    --bg: #F8FAF8;
+    --card: #FFFFFF;
+    --text: #1F2937;
+    --secondary: #666666;
+    --primary: #2E7D32;
+    --border: #E5E7EB;
+    --hover: #EDF7EE;
+
+}
+
+/* =====================================
+            DARK THEME
+===================================== */
+
+body[data-theme="dark"] {
+
+    --bg: #121212;
+    --card: #1E1E1E;
+    --text: #F5F5F5;
+    --secondary: #C2C2C2;
+    --primary: #66BB6A;
+    --border: #333333;
+    --hover: #2A2A2A;
+
+}
+
+/* =====================================
+            BODY
+===================================== */
+
+body {
+
+    font-family: system-ui, sans-serif;
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+}
+
+/* =====================================
+        APP WRAPPER
+===================================== */
+
+.light-theme,
+.dark-theme {
+
+    background: var(--bg);
+
+    color: var(--text);
+
+    min-height: 100vh;
+
+}

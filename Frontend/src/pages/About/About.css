@@ -3,12 +3,8 @@
 ========================================================== */
 
 .about-page {
-  background: linear-gradient(180deg,
-      #FAFCF9 0%,
-      #F4F8F3 45%,
-      #FFFFFF 100%);
+  background: var(--bg);
 }
-
 
 /* ==========================================================
                     HERO SECTION
@@ -59,7 +55,7 @@
 
     linear-gradient(to bottom,
       rgba(255, 255, 255, 0),
-      #F8FAF8);
+      var(--bg));
 
 }
 
@@ -87,7 +83,7 @@
 
   background: rgba(255, 255, 255, .95);
 
-  color: #2E7D32;
+  color: var(--primary);
 
   padding: 10px 22px;
 
@@ -189,7 +185,7 @@
 
   display: inline-block;
 
-  color: #2E7D32;
+  color: var(--primary);
 
   font-size: 13px;
 
@@ -211,13 +207,13 @@
 
   margin: 18px 0 30px;
 
-  color: #1F2937;
+  color: var(--text);
 
 }
 
 .story-description {
 
-  color: #555;
+  color: var(--secondary);
 
   line-height: 1.95;
 
@@ -243,7 +239,7 @@
 
   padding-left: 20px;
 
-  border-left: 4px solid #2E7D32;
+  border-left: 4px solid var(--primary);
 
 }
 
@@ -251,7 +247,7 @@
 
   margin-bottom: 14px;
 
-  color: #2E7D32;
+  color: var(--primary);
 
   font-size: 21px;
 
@@ -259,7 +255,7 @@
 
 .story-feature p {
 
-  color: #666;
+  color: var(--secondary);
 
   line-height: 1.85;
 
@@ -299,7 +295,7 @@
 
 .mission-card {
 
-  background: white;
+  background: var(--card);
 
   box-shadow: 0 20px 50px rgba(0, 0, 0, .08);
 
@@ -335,13 +331,13 @@
 
 .mission-card::before {
 
-  background: #2E7D32;
+  background: var(--primary);
 
 }
 
 .vision-card::before {
 
-  background: white;
+  background: var(--card);
 
 }
 
@@ -362,9 +358,9 @@
 
   border-radius: 30px;
 
-  background: #EDF7EE;
+  background: var(--hover);
 
-  color: #2E7D32;
+  color: var(--primary);
 
   font-size: 12px;
 
@@ -434,13 +430,13 @@
 
   letter-spacing: -1px;
 
-  color: #1F2937;
+  color: var(--text);
 
 }
 
 .values-header p {
 
-  color: #666;
+  color: var(--secondary);
 
   line-height: 1.9;
 
@@ -460,7 +456,7 @@
 
 .value-card {
 
-  background: white;
+  background: var(--card);
 
   border-radius: 24px;
 
@@ -489,7 +485,7 @@
 
   height: 5px;
 
-  background: #2E7D32;
+  background: var(--primary);
 
   transform: scaleX(0);
 
@@ -517,7 +513,7 @@
 
   font-weight: 800;
 
-  color: #2E7D32;
+  color: var(--primary);
 
   opacity: .12;
 
@@ -527,7 +523,7 @@
 
   margin: 18px 0;
 
-  color: #1F2937;
+  color: var(--text);
 
   font-size: 21px;
 
@@ -537,7 +533,7 @@
 
 .value-card p {
 
-  color: #666;
+  color: var(--secondary);
 
   line-height: 1.9;
 
@@ -559,7 +555,7 @@
   margin: 90px auto;
 
   background: linear-gradient(90deg,
-      #2E7D32,
+      var(--primary),
       #74C365);
 
 }
@@ -627,7 +623,7 @@ button:hover {
 
 ::-webkit-scrollbar-thumb {
 
-  background: #2E7D32;
+  background: var(--primary);
 
   border-radius: 30px;
 
