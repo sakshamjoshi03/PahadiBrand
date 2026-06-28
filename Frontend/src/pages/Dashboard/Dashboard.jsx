@@ -1,9 +1,11 @@
-﻿import "./Dashboard.css";
+import { useEffect, useState } from "react";
+import "./Dashboard.css";
 
 import hero from "../../assets/images/hero.jpg";
 import buransh from "../../assets/images/buransh.jpg";
 import honey from "../../assets/images/honey.jpg";
 import mandua from "../../assets/images/mandua.jpg";
+import rajma from "../../assets/images/rajma.jpg";
 
 import {
   ShoppingBag,
@@ -19,34 +21,89 @@ import StatsCard from "./StatsCard";
 import QuickAction from "./QuickAction";
 import ProductCard from "./ProductCard";
 import UpdateCard from "./UpdateCard";
+import { getAllProducts } from "../../services/productService";
 
 export default function Dashboard() {
 
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const imageMap = {
+    "buransh.jpg": buransh,
+    "honey.jpg": honey,
+    "mandua.jpg": mandua,
+    "rajma.jpg": rajma,
+    "apricot-oil.jpg": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80",
+    "jhangora.jpg": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"
+  };
+
+  useEffect(() => {
+
+    const fetchProducts = async () => {
+
+      try {
+
+        const response = await getAllProducts();
+
+        setProducts(response.data);
+
+      } catch (error) {
+
+        console.error(error);
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+    fetchProducts();
+
+  }, []);
+
   const stats = [
+
     {
       icon: ShoppingBag,
-      value: "03",
-      label: "Orders",
+      value: loading ? "..." : products.length,
+      label: "Products",
       color: "#2E7D32",
     },
+
     {
       icon: Heart,
-      value: "12",
-      label: "Wishlist",
+      value: loading
+        ? "..."
+        : [...new Set(products.map(p => p.category))].length,
+      label: "Categories",
       color: "#E91E63",
     },
+
     {
       icon: Award,
-      value: "250",
-      label: "Reward Points",
+      value: loading
+        ? "..."
+        : products.length > 0
+          ? (
+              products.reduce((sum, p) => sum + p.rating, 0) /
+              products.length
+            ).toFixed(1)
+          : "0.0",
+      label: "Avg Rating",
       color: "#F9A825",
     },
+
     {
       icon: Bookmark,
-      value: "05",
-      label: "Saved",
+      value: loading
+        ? "..."
+        : products.reduce((sum, p) => sum + p.stock, 0),
+      label: "Total Stock",
       color: "#3949AB",
     },
+
   ];
 
   const quickActions = [
@@ -69,30 +126,6 @@ export default function Dashboard() {
       icon: User,
       title: "Profile",
       subtitle: "Manage your account",
-    },
-  ];
-
-  const products = [
-    {
-      image: buransh,
-      name: "Buransh Juice",
-      category: "Beverages",
-      price: 349,
-      rating: 4.9,
-    },
-    {
-      image: honey,
-      name: "Wild Honey",
-      category: "Organic",
-      price: 499,
-      rating: 4.8,
-    },
-    {
-      image: mandua,
-      name: "Mandua Flour",
-      category: "Healthy Grains",
-      price: 249,
-      rating: 4.7,
     },
   ];
 
@@ -228,9 +261,42 @@ export default function Dashboard() {
 
       <div className="products-grid">
 
-        {products.map((item, index) => (
-          <ProductCard key={index} {...item} />
-        ))}
+        {loading ? (
+
+          <p
+            style={{
+              gridColumn: "1 / -1",
+              textAlign: "center",
+              fontSize: "22px",
+              fontWeight: "600"
+            }}
+          >
+            Loading Products...
+          </p>
+
+        ) : (
+
+          products.slice(0, 3).map((item) => (
+
+            <ProductCard
+
+              key={item.id}
+
+              image={imageMap[item.image] || buransh}
+
+              name={item.name}
+
+              category={item.category}
+
+              price={item.price}
+
+              rating={item.rating}
+
+            />
+
+          ))
+
+        )}
 
       </div>
 

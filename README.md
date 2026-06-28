@@ -7,9 +7,17 @@ PahadiBrand helps food-processing businesses generate brand names, product descr
 
 ## Tech Stack
 - React
-- Tailwind CSS
+- CSS
 - Express.js
 - MongoDB
 - Gemini API
 - JWT Authentication
+ 
 
+How to Run Backend Locally:
+
+1. cd backend
+2. npm install
+3. Create .env
+4. Add PORT=5000
+5. npm run dev
