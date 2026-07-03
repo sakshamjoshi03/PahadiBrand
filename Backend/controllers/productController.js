@@ -1,164 +1,234 @@
-const products = require("../data/products");
+const Product = require("../models/Product");
 
- 
 // GET ALL PRODUCTS
 // GET /api/products
 
+const getAllProducts = async (req, res) => {
+    try {
 
-const getAllProducts = (req, res) => {
-    res.status(200).json({
-        success: true,
-        count: products.length,
-        data: products
-    });
+        const products = await Product.find();
+
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            data: products
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
+    }
 };
 
- 
+
 // GET PRODUCT BY ID
 // GET /api/products/:id
- 
 
-const getProductById = (req, res) => {
-    const id = parseInt(req.params.id);
+const getProductById = async (req, res) => {
 
-    const product = products.find((item) => item.id === id);
+    try {
 
-    if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: "Product not found"
+        const product = await Product.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            data: product
         });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
     }
 
-    res.status(200).json({
-        success: true,
-        data: product
-    });
 };
 
- 
+
 // CREATE PRODUCT
 // POST /api/products
- 
 
-const createProduct = (req, res) => {
+const createProduct = async (req, res) => {
 
-    const {
-        name,
-        category,
-        price,
-        rating,
-        stock,
-        image,
-        description
-    } = req.body;
+    try {
 
-    if (!name || !category || !price) {
-        return res.status(400).json({
-            success: false,
-            message: "Name, category and price are required."
+        const {
+            name,
+            category,
+            price,
+            rating,
+            stock,
+            image,
+            description
+        } = req.body;
+
+        if (!name || !category || !price) {
+            return res.status(400).json({
+                success: false,
+                message: "Name, category and price are required."
+            });
+        }
+
+        const newProduct = await Product.create({
+            name,
+            category,
+            price,
+            rating,
+            stock,
+            image,
+            description
         });
+
+        res.status(201).json({
+            success: true,
+            message: "Product created successfully",
+            data: newProduct
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
     }
 
-    const newProduct = {
-        id: products.length + 1,
-        name,
-        category,
-        price,
-        rating: rating || 0,
-        stock: stock || 0,
-        image: image || "",
-        description: description || ""
-    };
-
-    products.push(newProduct);
-
-    res.status(201).json({
-        success: true,
-        message: "Product created successfully",
-        data: newProduct
-    });
 };
 
- 
+
 // UPDATE PRODUCT
 // PUT /api/products/:id
- 
 
-const updateProduct = (req, res) => {
+const updateProduct = async (req, res) => {
 
-    const id = parseInt(req.params.id);
+    try {
 
-    const product = products.find((item) => item.id === id);
+        const updatedProduct = await Product.findByIdAndUpdate(
 
-    if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: "Product not found"
+            req.params.id,
+
+            req.body,
+
+            {
+                new: true,
+                runValidators: true
+            }
+
+        );
+
+        if (!updatedProduct) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Product updated successfully",
+            data: updatedProduct
         });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
     }
 
-    Object.assign(product, req.body);
-
-    res.status(200).json({
-        success: true,
-        message: "Product updated successfully",
-        data: product
-    });
 };
 
 
 // DELETE PRODUCT
 // DELETE /api/products/:id
 
+const deleteProduct = async (req, res) => {
 
-const deleteProduct = (req, res) => {
+    try {
 
-    const id = parseInt(req.params.id);
+        const deletedProduct = await Product.findByIdAndDelete(req.params.id);
 
-    const index = products.findIndex((item) => item.id === id);
+        if (!deletedProduct) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
 
-    if (index === -1) {
-        return res.status(404).json({
-            success: false,
-            message: "Product not found"
+        res.status(200).json({
+            success: true,
+            message: "Product deleted successfully",
+            data: deletedProduct
         });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
     }
 
-    const deletedProduct = products.splice(index, 1);
-
-    res.status(200).json({
-        success: true,
-        message: "Product deleted successfully",
-        data: deletedProduct[0]
-    });
 };
 
 
-// SEARCH PRODUCT
+// SEARCH PRODUCTS
 // GET /api/products/search?q=
 
+const searchProducts = async (req, res) => {
 
-const searchProducts = (req, res) => {
+    try {
 
-    const keyword = req.query.q;
+        const keyword = req.query.q;
 
-    if (!keyword) {
-        return res.status(400).json({
-            success: false,
-            message: "Search keyword is required"
+        if (!keyword) {
+            return res.status(400).json({
+                success: false,
+                message: "Search keyword is required"
+            });
+        }
+
+        const result = await Product.find({
+
+            name: {
+                $regex: keyword,
+                $options: "i"
+            }
+
         });
+
+        res.status(200).json({
+            success: true,
+            count: result.length,
+            data: result
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+
     }
 
-    const result = products.filter((product) =>
-        product.name.toLowerCase().includes(keyword.toLowerCase())
-    );
-
-    res.status(200).json({
-        success: true,
-        count: result.length,
-        data: result
-    });
 };
 
 module.exports = {
