@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 
+
 // GET ALL PRODUCTS
 // GET /api/products
 
@@ -60,22 +61,31 @@ const getProductById = async (req, res) => {
 
 // CREATE PRODUCT
 // POST /api/products
-
 const createProduct = async (req, res) => {
 
     try {
 
         const {
             name,
+            slug,
             category,
             price,
-            rating,
             stock,
-            image,
-            description
+            rating,
+            reviewCount,
+            description,
+            fullDescription,
+            images,
+            features,
+            specifications,
+            sustainability,
+            tags,
+            aiContext,
+            isFeatured,
+            isActive
         } = req.body;
 
-        if (!name || !category || !price) {
+        if (!name || !category || price == null) {
             return res.status(400).json({
                 success: false,
                 message: "Name, category and price are required."
@@ -83,13 +93,25 @@ const createProduct = async (req, res) => {
         }
 
         const newProduct = await Product.create({
+
             name,
+            slug,
             category,
             price,
-            rating,
             stock,
-            image,
-            description
+            rating,
+            reviewCount,
+            description,
+            fullDescription,
+            images,
+            features,
+            specifications,
+            sustainability,
+            tags,
+            aiContext,
+            isFeatured,
+            isActive
+
         });
 
         res.status(201).json({
@@ -108,7 +130,6 @@ const createProduct = async (req, res) => {
     }
 
 };
-
 
 // UPDATE PRODUCT
 // PUT /api/products/:id
@@ -207,12 +228,40 @@ const searchProducts = async (req, res) => {
 
         const result = await Product.find({
 
-            name: {
-                $regex: keyword,
-                $options: "i"
+        $or: [
+
+            {
+                name: {
+                    $regex: keyword,
+                    $options: "i"
+                }
+            },
+
+            {
+                category: {
+                    $regex: keyword,
+                    $options: "i"
+                }
+            },
+            {
+                description: {
+                    $regex: keyword,
+                    $options: "i"
+                }
+            },
+
+            {
+                tags: {
+                    $elemMatch: {
+                        $regex: keyword,
+                        $options: "i"
+                    }
+                }
             }
 
-        });
+        ]
+
+    }); 
 
         res.status(200).json({
             success: true,
@@ -230,6 +279,50 @@ const searchProducts = async (req, res) => {
     }
 
 };
+// GET RELATED PRODUCTS
+// GET /api/products/related/:category/:id
+
+const getRelatedProducts = async (req, res) => {
+
+    try {
+
+        const { category, id } = req.params;
+
+        const relatedProducts = await Product.find({
+
+            category,
+
+            _id: {
+                $ne: id
+            },
+
+            isActive: true
+
+        }).limit(4);
+
+        res.status(200).json({
+
+            success: true,
+
+            count: relatedProducts.length,
+
+            data: relatedProducts
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
 
 module.exports = {
     getAllProducts,
@@ -237,5 +330,6 @@ module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
-    searchProducts
+    searchProducts,
+    getRelatedProducts
 };

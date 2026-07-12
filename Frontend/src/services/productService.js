@@ -18,7 +18,7 @@ export const getAllProducts = async () => {
 // GET /api/products/:id
 export const getProductById = async (id) => {
   const response = await axios.get(`${API_URL}/${id}`);
-  return response.data;
+  return response.data.data;
 };
 
 // POST /api/products
@@ -45,4 +45,12 @@ export const searchProducts = async (query) => {
     params: { q: query }
   });
   return response.data;
+};
+// GET /api/products/related/:category/:id
+export const getRelatedProducts = async (category, id) => {
+  const response = await axios.get(
+    `${API_URL}/related/${category}/${id}`
+  );
+
+  return response.data.data;
 };

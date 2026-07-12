@@ -1,10 +1,80 @@
 const mongoose = require("mongoose");
 
+// ======================
+// Image Schema
+// ======================
+const imageSchema = new mongoose.Schema(
+  {
+    url: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    alt: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    isPrimary: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { _id: false }
+);
+
+// ======================
+// Specification Schema
+// ======================
+const specificationSchema = new mongoose.Schema(
+  {
+    key: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    value: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: false }
+);
+
+// ======================
+// Sustainability Schema
+// ======================
+const sustainabilitySchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    description: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+  },
+  { _id: false }
+);
+
+// ======================
+// Product Schema
+// ======================
 const productSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
+      trim: true,
+    },
+
+    slug: {
+      type: String,
+      unique: true,
       trim: true,
     },
 
@@ -20,6 +90,11 @@ const productSchema = new mongoose.Schema(
       min: 0,
     },
 
+    stock: {
+      type: Number,
+      default: 0,
+    },
+
     rating: {
       type: Number,
       default: 0,
@@ -27,22 +102,59 @@ const productSchema = new mongoose.Schema(
       max: 5,
     },
 
-    stock: {
+    reviewCount: {
       type: Number,
       default: 0,
-      min: 0,
-    },
-
-    image: {
-      type: String,
-      default: "",
-      trim: true,
     },
 
     description: {
       type: String,
       default: "",
-      trim: true,
+    },
+
+    fullDescription: {
+      type: String,
+      default: "",
+    },
+
+    images: {
+      type: [imageSchema],
+      default: [],
+    },
+
+    features: {
+      type: [String],
+      default: [],
+    },
+
+    specifications: {
+      type: [specificationSchema],
+      default: [],
+    },
+
+    sustainability: {
+      type: sustainabilitySchema,
+      default: () => ({}),
+    },
+
+    tags: {
+      type: [String],
+      default: [],
+    },
+
+    aiContext: {
+      type: String,
+      default: "",
+    },
+
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   {

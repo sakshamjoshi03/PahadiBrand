@@ -1,165 +1,163 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Hero from "../components/Hero";
 import Card from "../components/Card";
 
 import { getAllProducts } from "../services/productService";
 
-import buranshImg from "../assets/images/buransh.jpg";
-import honeyImg from "../assets/images/honey.jpg";
-import manduaImg from "../assets/images/mandua.jpg";
-import rajmaImg from "../assets/images/rajma.jpg";
-
 import "./Home.css";
 
 export default function Home() {
 
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-  const imageMap = {
-    "buransh.jpg": buranshImg,
-    "honey.jpg": honeyImg,
-    "mandua.jpg": manduaImg,
-    "rajma.jpg": rajmaImg,
-    "apricot-oil.jpg": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80",
-    "jhangora.jpg": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"
-  };
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-  useEffect(() => {
+    useEffect(() => {
 
-    const fetchProducts = async () => {
+        const fetchProducts = async () => {
 
-      try {
+            try {
 
-        const response = await getAllProducts();
+                const response = await getAllProducts();
 
-        setProducts(response.data);
+                setProducts(response.data);
 
-      } catch (err) {
+            } catch (err) {
 
-        console.error(err);
+                console.error(err);
 
-        setError("Unable to load products.");
+                setError("Unable to load products.");
 
-      } finally {
+            } finally {
 
-        setLoading(false);
+                setLoading(false);
 
-      }
+            }
 
-    };
+        };
 
-    fetchProducts();
+        fetchProducts();
 
-  }, []);
+    }, []);
 
-  if (loading) {
+    if (loading) {
+
+        return (
+            <h2 style={{ textAlign: "center", marginTop: "150px" }}>
+                Loading Products...
+            </h2>
+        );
+
+    }
+
+    if (error) {
+
+        return (
+            <h2
+                style={{
+                    textAlign: "center",
+                    marginTop: "150px",
+                    color: "red",
+                }}
+            >
+                {error}
+            </h2>
+        );
+
+    }
 
     return (
-      <h2 style={{ textAlign: "center", marginTop: "150px" }}>
-        Loading Products...
-      </h2>
-    );
 
-  }
+        <div className="home-container">
 
-  if (error) {
+            <Hero />
 
-    return (
-      <h2 style={{ textAlign: "center", marginTop: "150px", color: "red" }}>
-        {error}
-      </h2>
-    );
+            <section className="collections-section">
 
-  }
+                <span className="collections-subtitle">
+                    MOUNTAIN HARVEST
+                </span>
 
-  return (
+                <h2 className="collections-title">
+                    Our Signature Collections
+                </h2>
 
-    <div className="home-container">
+                <div className="products-grid">
 
-      <Hero />
+                    {products.map((product) => (
 
-      <section className="collections-section">
+                        <div
+                            key={product._id}
+                            onClick={() => navigate(`/products/${product._id}`)}
+                            style={{ cursor: "pointer" }}
+                        >
 
-        <span className="collections-subtitle">
+                            <Card
+                                image={
+                                    product.images?.find(
+                                        (img) => img.isPrimary
+                                    )?.url ||
+                                    product.images?.[0]?.url ||
+                                    "/product-images/buransh/main.png"
+                                }
+                                title={product.name}
+                                description={product.description}
+                                price={`₹${product.price}`}
+                                tag={product.category}
+                            />
 
-          MOUNTAIN HARVEST
+                        </div>
 
-        </span>
+                    ))}
 
-        <h2 className="collections-title">
+                </div>
 
-          Our Signature Collections
+            </section>
 
-        </h2>
+            <section className="features-section">
 
-        <div className="products-grid">
+                <div className="features-container">
 
-          {products.map((product) => (
+                    <div className="feature-item">
 
-            <Card
-              key={product.id}
-              image={imageMap[product.image] || buranshImg}
-              title={product.name}
-              description={product.description}
-              price={`₹${product.price}`}
-              tag={product.category}
-            />
+                        <span className="feature-icon">🌿</span>
 
-          ))}
+                        <span className="feature-text">
+                            100% Organic
+                        </span>
+
+                    </div>
+
+                    <div className="feature-item">
+
+                        <span className="feature-icon">🛍️</span>
+
+                        <span className="feature-text">
+                            Direct From Villages
+                        </span>
+
+                    </div>
+
+                    <div className="feature-item">
+
+                        <span className="feature-icon">❤️</span>
+
+                        <span className="feature-text">
+                            Supporting Farmers
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
 
         </div>
 
-      </section>
-
-      <section className="features-section">
-
-        <div className="features-container">
-
-          <div className="feature-item">
-
-            <span className="feature-icon">🌿</span>
-
-            <span className="feature-text">
-
-              100% Organic
-
-            </span>
-
-          </div>
-
-          <div className="feature-item">
-
-            <span className="feature-icon">🛍️</span>
-
-            <span className="feature-text">
-
-              Direct From Villages
-
-            </span>
-
-          </div>
-
-          <div className="feature-item">
-
-            <span className="feature-icon">❤️</span>
-
-            <span className="feature-text">
-
-              Supporting Farmers
-
-            </span>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </div>
-
-  );
+    );
 
 }

@@ -5,6 +5,7 @@ import About from "../pages/About/About";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
+import ProductDetails from "../pages/ProductDetails/ProductDetails";
 
 function AppRouter({ darkMode }) {
   return (
@@ -13,6 +14,11 @@ function AppRouter({ darkMode }) {
       <Route
         path="/"
         element={<Home darkMode={darkMode} />}
+      />
+
+      <Route
+        path="/products/:id"
+        element={<ProductDetails darkMode={darkMode} />}
       />
 
       <Route
