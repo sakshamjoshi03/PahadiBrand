@@ -1,8 +1,29 @@
-﻿import { Link } from "react-router-dom";
+﻿import { Link, useNavigate } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
 import "./Navbar.css";
 
 function Navbar({ darkMode, toggleTheme }) {
+  const navigate = useNavigate();
+
+const token = localStorage.getItem("token");
+
+const user = JSON.parse(
+
+    localStorage.getItem("user") || "null"
+
+);
+
+const handleLogout = () => {
+
+    localStorage.removeItem("token");
+
+    localStorage.removeItem("user");
+
+    localStorage.removeItem("rememberMe");
+
+    navigate("/login");
+
+};
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -42,11 +63,40 @@ function Navbar({ darkMode, toggleTheme }) {
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <Link to="/login">
-            <button className="login-btn">
-              Login
-            </button>
-          </Link>
+          {token ? (
+
+    <div className="user-section">
+
+        <span className="user-name">
+
+            👤 {user?.name}
+
+        </span>
+
+        <button
+            className="logout-btn"
+            onClick={handleLogout}
+        >
+
+            Logout
+
+        </button>
+
+    </div>
+
+) : (
+
+    <Link to="/login">
+
+        <button className="login-btn">
+
+            Login
+
+        </button>
+
+    </Link>
+
+)}
 
         </div>
 

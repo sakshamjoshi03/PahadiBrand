@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
+import ProtectedRoute from "./ProtectedRoute";
 
 function AppRouter({ darkMode }) {
   return (
@@ -27,9 +28,13 @@ function AppRouter({ darkMode }) {
       />
 
       <Route
-        path="/dashboard"
-        element={<Dashboard darkMode={darkMode} />}
-      />
+         path="/dashboard"
+         element={
+        <ProtectedRoute>
+            <Dashboard darkMode={darkMode} />
+        </ProtectedRoute>
+    }
+/>
 
       <Route
         path="/login"

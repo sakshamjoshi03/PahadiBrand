@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { register } from "../services/authService";
 import "./Signup.css";
 import hero from "../assets/images/hero.jpg";
+import { useEffect } from "react";
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -15,6 +17,7 @@ const Signup = () => {
     });
 
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -54,15 +57,80 @@ const Signup = () => {
         return Object.keys(temp).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         if (!validate()) return;
 
-        alert("Account Created Successfully!");
+        setLoading(true);
 
-        navigate("/login");
+        try {
+
+            const response = await register({
+
+                name: formData.fullname,
+
+                email: formData.email,
+
+                password: formData.password
+
+            });
+
+            localStorage.setItem(
+
+                "token",
+
+                response.token
+
+            );
+
+            localStorage.setItem(
+
+                "user",
+
+                JSON.stringify(response.user)
+
+            );
+
+            alert("Registration Successful!");
+
+            navigate("/dashboard");
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+            alert(
+
+                err.response?.data?.message ||
+
+                "Registration failed."
+
+            );
+
+        }
+
+        finally {
+
+            setLoading(false);
+
+        }
+
     };
+    useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+
+        navigate("/dashboard");
+
+    }
+
+}, [navigate]);
 
     return (
         <div
@@ -176,9 +244,23 @@ const Signup = () => {
                         <span className="error">{errors.agree}</span>
                     )}
 
-                    <button className="signup-btn" type="submit">
-                        Create Account →
-                    </button>
+                    <button
+                    className="signup-btn"
+                    type="submit"
+                    disabled={loading}
+                    >
+
+                    {
+
+                        loading
+
+                            ? "Creating Account..."
+
+                            : "Create Account →"
+
+                    }
+
+                </button>
 
                 </form>
 

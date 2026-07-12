@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { login } from "../services/authService";
 import "./Login.css";
+import { useEffect } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -8,20 +10,68 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+const handleSubmit = async (e) => {
 
-  const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Logging in with:", {
-      email,
-      password,
-      rememberMe,
-    });
+    setError("");
 
-    // Temporary navigation
-    // Replace with backend authentication later
-    navigate("/dashboard");
-  };
+    setLoading(true);
+
+    try {
+
+        const response = await login({
+
+            email,
+            password
+
+        });
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+
+      // Optional: only if Remember Me is checked
+      if (rememberMe) {
+          localStorage.setItem("rememberMe", "true");
+      }
+
+        navigate("/dashboard");
+
+    }
+
+    catch (err) {
+
+        console.error(err);
+
+        setError(
+
+            err.response?.data?.message ||
+
+            "Login failed."
+
+        );
+
+    }
+
+    finally {
+
+        setLoading(false);
+
+    }
+
+};
+useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (token) {
+
+        navigate("/dashboard");
+
+    }
+
+}, [navigate]);
 
   return (
     <div className="login-container">
@@ -31,6 +81,19 @@ export default function Login() {
         <p className="login-subtitle">
           Login to continue your journey with PahadiBrand
         </p>
+                {error && (
+
+            <div
+                style={{
+                    color: "red",
+                    marginBottom: "15px",
+                    textAlign: "center"
+                }}
+            >
+                {error}
+            </div>
+
+        )}
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
@@ -70,9 +133,13 @@ export default function Login() {
             </a>
           </div>
 
-          <button type="submit" className="login-submit-btn">
-            Login
-          </button>
+          <button
+          type="submit"
+          className="login-submit-btn"
+          disabled={loading}>
+          {loading ? "Logging In..." : "Login"}
+
+      </button>
         </form>
 
         <div className="login-footer">

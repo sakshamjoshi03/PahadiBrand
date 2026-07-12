@@ -6,6 +6,7 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 
 const productRoutes = require("./routes/productRoutes");
+const authRoutes = require("./routes/authRoutes");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -25,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/products", productRoutes);
-
+app.use("/api/auth", authRoutes);
 // 404 Handler
 
 app.use((req, res) => {

@@ -246,3 +246,30 @@
     }
 
 }
+.user-section{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+
+.user-name{
+
+    font-weight:600;
+
+    color:#2e7d32;
+
+    white-space:nowrap;
+
+}
+
+.logout-btn{
+
+    background:#d32f2f;
+
+    color:white;
+
+}
