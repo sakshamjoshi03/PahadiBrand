@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import ProtectedRoute from "./ProtectedRoute";
+import OAuthSuccess from "../pages/OAuthSuccess/OAuthSuccess";
 
 function AppRouter({ darkMode }) {
   return (
@@ -44,6 +45,10 @@ function AppRouter({ darkMode }) {
       <Route
         path="/signup"
         element={<Signup darkMode={darkMode} />}
+      />
+      <Route
+        path="/oauth-success"
+        element={<OAuthSuccess />}
       />
 
     </Routes>

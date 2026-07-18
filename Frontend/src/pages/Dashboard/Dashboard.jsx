@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import "./Dashboard.css";
 
 import hero from "../../assets/images/hero.jpg";
-import buransh from "../../assets/images/buransh.jpg";
-import honey from "../../assets/images/honey.jpg";
-import mandua from "../../assets/images/mandua.jpg";
-import rajma from "../../assets/images/rajma.jpg";
 
 import {
   ShoppingBag,
@@ -27,41 +23,40 @@ export default function Dashboard() {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState("User");
 
-  const imageMap = {
-    "buransh.jpg": buransh,
-    "honey.jpg": honey,
-    "mandua.jpg": mandua,
-    "rajma.jpg": rajma,
-    "apricot-oil.jpg": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80",
-    "jhangora.jpg": "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=600&q=80"
-  };
 
-  useEffect(() => {
+useEffect(() => {
+
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user?.name) {
+        setUserName(user.name);
+    }
 
     const fetchProducts = async () => {
 
-      try {
+        try {
 
-        const response = await getAllProducts();
+            const response = await getAllProducts();
 
-        setProducts(response.data);
+            setProducts(response.data);
 
-      } catch (error) {
+        } catch (error) {
 
-        console.error(error);
+            console.error(error);
 
-      } finally {
+        } finally {
 
-        setLoading(false);
+            setLoading(false);
 
-      }
+        }
 
     };
 
     fetchProducts();
 
-  }, []);
+}, []);
 
   const stats = [
 
@@ -172,7 +167,7 @@ export default function Dashboard() {
         <div>
 
           <h2>
-            👋 Welcome Back, Saksham
+            👋 Welcome Back, {userName}
           </h2>
 
           <p>
@@ -277,12 +272,15 @@ export default function Dashboard() {
         ) : (
 
           products.slice(0, 3).map((item) => (
+          <ProductCard
 
-            <ProductCard
+              key={item._id}
 
-              key={item.id}
-
-              image={imageMap[item.image] || buransh}
+              image={
+                  item.images?.find((img) => img.isPrimary)?.url ||
+                  item.images?.[0]?.url ||
+                  "/product-images/buransh/main.png"
+              }
 
               name={item.name}
 
@@ -292,7 +290,7 @@ export default function Dashboard() {
 
               rating={item.rating}
 
-            />
+          />
 
           ))
 

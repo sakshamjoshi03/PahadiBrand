@@ -12,6 +12,9 @@ export default function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:5000/api/auth/google";
+  };
 const handleSubmit = async (e) => {
 
     e.preventDefault();
@@ -117,7 +120,6 @@ useEffect(() => {
               required
             />
           </div>
-
           <div className="form-actions">
             <label className="remember-me">
               <input
@@ -134,12 +136,30 @@ useEffect(() => {
           </div>
 
           <button
-          type="submit"
-          className="login-submit-btn"
-          disabled={loading}>
-          {loading ? "Logging In..." : "Login"}
+            type="submit"
+            className="login-submit-btn"
+            disabled={loading}
+          >
+            {loading ? "Logging In..." : "Login"}
+          </button>
 
-      </button>
+          <div className="divider">
+            <span>OR</span>
+          </div>
+
+          <button
+            type="button"
+            className="google-login-btn"
+            onClick={handleGoogleLogin}
+          >
+            <img
+              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+              alt="Google"
+              width="20"
+              height="20"
+            />
+            Continue with Google
+          </button>
         </form>
 
         <div className="login-footer">

@@ -221,10 +221,38 @@ const loginUser = async (req, res) => {
     }
 
 };
+// ======================================
+// GOOGLE LOGIN CALLBACK
+// ======================================
 
+const googleCallback = async (req, res) => {
+
+    try {
+
+        const user = req.user;
+
+        const token = generateToken(user._id);
+
+        const frontendURL =
+            `http://localhost:5173/oauth-success?token=${token}`;
+
+        res.redirect(frontendURL);
+
+    }
+
+    catch (error) {
+
+        res.redirect(
+            "http://localhost:5173/login?error=google_auth_failed"
+        );
+
+    }
+
+};
 module.exports = {
 
     registerUser,
-    loginUser
+    loginUser,
+    googleCallback
 
 };
