@@ -1,0 +1,111 @@
+.hero-section{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:80px 20px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.hero-content{
+
+    max-width:900px;
+
+    text-align:center;
+
+    z-index:2;
+
+}
+
+.hero-tag{
+
+    display:inline-block;
+
+    padding:8px 20px;
+
+    border-radius:50px;
+
+    background:var(--glass);
+
+    color:var(--green);
+
+    font-weight:600;
+
+    margin-bottom:24px;
+
+}
+
+.hero-mascot{
+
+    width:220px;
+
+    margin:0 auto 30px;
+
+    display:block;
+
+    animation:float 5s ease-in-out infinite;
+
+}
+
+.hero-content h1{
+
+    font-size:4rem;
+
+    color:var(--green);
+
+    margin-bottom:20px;
+
+}
+
+.hero-content p{
+
+    max-width:650px;
+
+    margin:auto;
+
+    line-height:1.8;
+
+    color:var(--text-light);
+
+    font-size:1.1rem;
+
+}
+
+.explore-btn{
+
+    margin-top:40px;
+
+    padding:18px 40px;
+
+    border:none;
+
+    border-radius:60px;
+
+    cursor:pointer;
+
+    background:var(--green);
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+.explore-btn:hover{
+
+    transform:translateY(-4px);
+
+}

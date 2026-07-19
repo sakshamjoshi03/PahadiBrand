@@ -1,0 +1,97 @@
+/* ===========================================
+   PAHADI BHULA DESIGN TOKENS
+===========================================*/
+
+:root{
+
+/* BACKGROUND */
+
+--bg-primary:#F7F4EC;
+--bg-secondary:#FFFDF8;
+--bg-tertiary:#F0ECE2;
+
+/* GLASS */
+
+--glass-bg:rgba(255,255,255,.55);
+--glass-border:rgba(255,255,255,.35);
+--glass-shadow:0 20px 50px rgba(0,0,0,.08);
+
+/* TEXT */
+
+--text-primary:#22312A;
+--text-secondary:#5E6D66;
+--text-muted:#8A938F;
+
+/* BRAND */
+
+--forest:#2E7D32;
+--forest-light:#4CAF50;
+
+--mountain:#556B5D;
+
+--orange:#D97706;
+
+--gold:#E9C46A;
+
+/* BORDER */
+
+--border:#E5E1D7;
+
+/* SHADOW */
+
+--shadow-soft:0 10px 40px rgba(0,0,0,.08);
+
+--shadow-hover:0 20px 50px rgba(0,0,0,.12);
+
+/* RADIUS */
+
+--radius-sm:12px;
+
+--radius-md:20px;
+
+--radius-lg:32px;
+
+--radius-xl:50px;
+
+/* TRANSITION */
+
+--transition:.35s ease;
+
+}
+.dark-theme{
+
+--bg-primary:#0F1517;
+
+--bg-secondary:#182225;
+
+--bg-tertiary:#202D30;
+
+--glass-bg:rgba(255,255,255,.05);
+
+--glass-border:rgba(255,255,255,.08);
+
+--glass-shadow:0 20px 60px rgba(0,0,0,.45);
+
+--text-primary:#FFFFFF;
+
+--text-secondary:#D6DDD8;
+
+--text-muted:#97A8A1;
+
+--forest:#57B65C;
+
+--forest-light:#8ED89B;
+
+--mountain:#37474F;
+
+--orange:#F4A63D;
+
+--gold:#FFD54F;
+
+--border:#2C3B3D;
+
+--shadow-soft:0 20px 40px rgba(0,0,0,.4);
+
+--shadow-hover:0 25px 60px rgba(0,0,0,.55);
+
+}

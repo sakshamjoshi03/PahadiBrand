@@ -1,0 +1,37 @@
+.welcome-card {
+    max-width: 900px;
+    margin: 35px auto;
+    padding: 36px 32px;
+    border-radius: 28px;
+    background: rgba(46, 125, 50, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255, 0.16);
+    box-shadow: 0 25px 60px rgba(46, 125, 50, 0.32);
+    text-align: center;
+}
+
+.welcome-card h3,
+.welcome-card h2,
+.welcome-card p,
+.welcome-card strong {
+    color: #ffffff;
+}
+
+.welcome-card h3 {
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+}
+
+.welcome-card h2 {
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+}
+
+.welcome-card p {
+    margin: 0 auto;
+    max-width: 720px;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1rem;
+}

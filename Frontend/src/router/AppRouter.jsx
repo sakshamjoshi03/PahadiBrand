@@ -8,6 +8,7 @@ import Signup from "../pages/Signup";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import ProtectedRoute from "./ProtectedRoute";
 import OAuthSuccess from "../pages/OAuthSuccess/OAuthSuccess";
+import YourPahadiBhula from "../pages/YourPahadiBhula/YourPahadiBhula";
 
 function AppRouter({ darkMode }) {
   return (
@@ -27,7 +28,10 @@ function AppRouter({ darkMode }) {
         path="/about"
         element={<About darkMode={darkMode} />}
       />
-
+      <Route
+      path="/bhula"
+      element={<YourPahadiBhula />}
+      />
       <Route
          path="/dashboard"
          element={

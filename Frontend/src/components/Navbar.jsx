@@ -37,6 +37,9 @@ const handleLogout = () => {
         <nav className="nav-links">
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
+          <Link to="/bhula" className="nav-bhula-link">
+            AI Assistant
+          </Link>
           <Link to="/dashboard">Dashboard</Link>
         </nav>
 
