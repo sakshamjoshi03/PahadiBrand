@@ -1,0 +1,80 @@
+.typing-wrapper{
+
+    display:flex;
+
+    gap:12px;
+
+    align-items:center;
+
+    margin-top:20px;
+
+}
+
+.typing-avatar{
+
+    width:45px;
+
+}
+
+.typing-box{
+
+    background:white;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    border:1px solid #ddd;
+
+}
+
+.typing-box p{
+
+    margin-bottom:10px;
+
+}
+
+.dot{
+
+    width:8px;
+
+    height:8px;
+
+    background:#2E7D32;
+
+    display:inline-block;
+
+    border-radius:50%;
+
+    margin-right:6px;
+
+    animation:blink 1s infinite;
+}
+
+.dot:nth-child(3){
+
+animation-delay:.2s;
+
+}
+
+.dot:nth-child(4){
+
+animation-delay:.4s;
+
+}
+
+@keyframes blink{
+
+0%,100%{
+
+opacity:.3;
+
+}
+
+50%{
+
+opacity:1;
+
+}
+
+}

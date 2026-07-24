@@ -1,6 +1,7 @@
 import "./YourPahadiBhula.css";
 
 import HeroSection from "../../components/AI/HeroSection";
+import ChatSection from "../../components/AI/ChatSection";
 
 export default function YourPahadiBhula() {
 
@@ -9,6 +10,8 @@ export default function YourPahadiBhula() {
         <div className="bhula-page">
 
             <HeroSection />
+
+            <ChatSection />
 
         </div>
 

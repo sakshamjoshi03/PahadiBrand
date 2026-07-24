@@ -1,7 +1,35 @@
-import React from 'react';
+import "./ChatWindow.css";
 
-const ChatWindow = () => {
-  return <div>ChatWindow</div>;
-};
+import ChatBubble from "./ChatBubble";
+import TypingIndicator from "./TypingIndicator";
 
-export default ChatWindow;
+export default function ChatWindow({
+  messages,
+  loading,
+}) {
+
+  return (
+
+    <div className="chat-window">
+
+      {messages.map((message, index)=>(
+
+        <ChatBubble
+
+          key={index}
+
+          role={message.role}
+
+          message={message.content}
+
+        />
+
+      ))}
+
+      {loading && <TypingIndicator />}
+
+    </div>
+
+  );
+
+}

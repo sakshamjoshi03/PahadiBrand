@@ -1,0 +1,59 @@
+.chat-bubble{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:12px;
+
+    margin:20px 0;
+
+}
+
+.chat-bubble.user{
+
+    justify-content:flex-end;
+
+}
+
+.chat-avatar{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+}
+
+.bubble-content{
+
+    max-width:70%;
+
+    padding:16px 22px;
+
+    border-radius:20px;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+}
+
+.chat-bubble.assistant .bubble-content{
+
+    background:#ffffff;
+
+    color:#222;
+
+    border:1px solid #ddd;
+
+}
+
+.chat-bubble.user .bubble-content{
+
+    background:var(--forest);
+
+    color:white;
+
+}

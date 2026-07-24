@@ -1,0 +1,21 @@
+.chat-window{
+
+    width:100%;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:30px;
+
+    min-height:500px;
+
+    background:rgba(255,255,255,.4);
+
+    backdrop-filter:blur(14px);
+
+    border-radius:24px;
+
+    margin-top:80px;
+
+}
