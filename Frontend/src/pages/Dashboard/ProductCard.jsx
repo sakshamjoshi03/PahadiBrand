@@ -13,7 +13,7 @@ export default function ProductCard({
             <div className="product-image-wrapper">
                 <img
                     src={image}
-                    alt={name}
+                    alt={`${name} preview`}
                     className="product-image"
                 />
             </div>

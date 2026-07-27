@@ -9,6 +9,7 @@
     border: 1px solid rgba(255,255,255, 0.16);
     box-shadow: 0 25px 60px rgba(46, 125, 50, 0.32);
     text-align: center;
+    min-width: 0;
 }
 
 .welcome-card h3,
@@ -34,4 +35,28 @@
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.95);
     font-size: 1rem;
+    overflow-wrap: anywhere;
+}
+
+@media(max-width:768px){
+
+    .welcome-card{
+        padding:30px 24px;
+        border-radius:22px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .welcome-card{
+        margin:26px auto;
+        padding:24px 18px;
+        border-radius:18px;
+    }
+
+    .welcome-card h2{
+        font-size:1.45rem;
+    }
+
 }

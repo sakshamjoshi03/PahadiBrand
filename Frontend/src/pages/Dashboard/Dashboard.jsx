@@ -17,12 +17,31 @@ import StatsCard from "./StatsCard";
 import QuickAction from "./QuickAction";
 import ProductCard from "./ProductCard";
 import UpdateCard from "./UpdateCard";
+import EmptyState from "../../components/AI/EmptyState";
+import { PackageOpen, Sparkles } from "lucide-react";
 import { getAllProducts } from "../../services/productService";
+
+const getDashboardErrorMessage = (error) => {
+  if (!error.response) {
+    return "Network connection lost. Please check your internet and try again.";
+  }
+
+  if (error.response.status === 401) {
+    return "Please sign in again to view your dashboard.";
+  }
+
+  if (error.response.status >= 500) {
+    return "Unable to load dashboard data. Please try again.";
+  }
+
+  return "Unable to load dashboard data.";
+};
 
 export default function Dashboard() {
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [userName, setUserName] = useState("User");
 
 
@@ -40,11 +59,12 @@ useEffect(() => {
 
             const response = await getAllProducts();
 
-            setProducts(response.data);
+            setProducts(Array.isArray(response.data) ? response.data : []);
+            setError("");
 
         } catch (error) {
 
-            console.error(error);
+            setError(getDashboardErrorMessage(error));
 
         } finally {
 
@@ -57,6 +77,28 @@ useEffect(() => {
     fetchProducts();
 
 }, []);
+
+  if (loading) {
+    return (
+      <div className="dashboard-page">
+        <div className="dashboard-state">
+          <h2>Loading Dashboard...</h2>
+          <p>Please wait while we fetch your latest data.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-page">
+        <div className="dashboard-state error-state">
+          <h2>{error}</h2>
+          <p>Please refresh the page or try again shortly.</p>
+        </div>
+      </div>
+    );
+  }
 
   const stats = [
 
@@ -189,14 +231,6 @@ useEffect(() => {
 
         </div>
 
-        <div className="member-badge">
-
-          <span>Member Since</span>
-
-          <h3>June 2026</h3>
-
-        </div>
-
       </div>
 
       {/* Stats */}
@@ -213,7 +247,7 @@ useEffect(() => {
 
       <div className="hero-banner">
 
-        <img src={hero} alt="hero" />
+        <img src={hero} alt="Himalayan product showcase" />
 
         <div className="hero-overlay">
 
@@ -256,19 +290,12 @@ useEffect(() => {
 
       <div className="products-grid">
 
-        {loading ? (
-
-          <p
-            style={{
-              gridColumn: "1 / -1",
-              textAlign: "center",
-              fontSize: "22px",
-              fontWeight: "600"
-            }}
-          >
-            Loading Products...
-          </p>
-
+        {products.length === 0 ? (
+          <EmptyState
+            icon={PackageOpen}
+            title="No data available"
+            description="Your dashboard will populate as soon as fresh Himalayan products are added."
+          />
         ) : (
 
           products.slice(0, 3).map((item) => (

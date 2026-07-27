@@ -1,0 +1,15 @@
+.admin-state{
+    text-align:center;
+    padding:70px 20px;
+    color:#666;
+    line-height:1.6;
+}
+
+.admin-state h2{
+    color:#2E7D32;
+    margin-bottom:10px;
+}
+
+.admin-error h2{
+    color:#b91c1c;
+}

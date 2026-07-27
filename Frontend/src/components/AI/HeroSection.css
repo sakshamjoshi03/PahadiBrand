@@ -13,6 +13,7 @@
     position:relative;
 
     overflow:hidden;
+    width:100%;
 
 }
 
@@ -23,6 +24,7 @@
     text-align:center;
 
     z-index:2;
+    min-width:0;
 
 }
 
@@ -63,6 +65,7 @@
     color:var(--green);
 
     margin-bottom:20px;
+    overflow-wrap:anywhere;
 
 }
 
@@ -77,6 +80,7 @@
     color:var(--text-light);
 
     font-size:1.1rem;
+    overflow-wrap:anywhere;
 
 }
 
@@ -107,5 +111,52 @@
 .explore-btn:hover{
 
     transform:translateY(-4px);
+
+}
+
+@media(max-width:768px){
+
+    .hero-section{
+        padding:90px 18px 60px;
+    }
+
+    .hero-mascot{
+        width:180px;
+    }
+
+    .hero-content h1{
+        font-size:3rem;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .hero-section{
+        min-height:calc(100svh - 60px);
+        padding:84px 14px 44px;
+    }
+
+    .hero-tag{
+        padding:8px 14px;
+        font-size:14px;
+    }
+
+    .hero-mascot{
+        width:150px;
+    }
+
+    .hero-content h1{
+        font-size:2.25rem;
+    }
+
+    .hero-content p{
+        font-size:1rem;
+    }
+
+    .explore-btn{
+        width:100%;
+        padding:15px 22px;
+    }
 
 }

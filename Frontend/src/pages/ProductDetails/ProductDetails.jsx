@@ -15,6 +15,22 @@ import RelatedProducts from "../../components/ProductDetails/RelatedProducts";
 
 import "../../components/ProductDetails/ProductDetails.css";
 
+const getProductDetailsErrorMessage = (error) => {
+    if (!error.response) {
+        return "Network connection lost. Please check your internet and try again.";
+    }
+
+    if (error.response.status === 404) {
+        return "Product Not Found";
+    }
+
+    if (error.response.status >= 500) {
+        return "Unable to load product details. Please try again.";
+    }
+
+    return "Product could not be loaded.";
+};
+
 const ProductDetails = () => {
 
     const { id } = useParams();
@@ -24,6 +40,7 @@ const ProductDetails = () => {
     const [relatedProducts, setRelatedProducts] = useState([]);
 
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     const [selectedQuantity, setSelectedQuantity] = useState(1);
 
@@ -49,10 +66,13 @@ const ProductDetails = () => {
             );
 
             setRelatedProducts(related);
+            setError("");
 
         } catch (error) {
 
-            console.error(error);
+            setError(getProductDetailsErrorMessage(error));
+            setProduct(null);
+            setRelatedProducts([]);
 
         } finally {
 
@@ -66,14 +86,23 @@ const ProductDetails = () => {
 
         return (
 
-            <h2
-                style={{
-                    textAlign: "center",
-                    marginTop: "120px",
-                }}
-            >
-                Loading Product...
-            </h2>
+            <div className="product-details-state">
+                <h2>Loading Product...</h2>
+                <p>Please wait while we fetch the product details.</p>
+            </div>
+
+        );
+
+    }
+
+    if (error) {
+
+        return (
+
+            <div className="product-details-state error-state">
+                <h2>{error}</h2>
+                <p>Please try again in a moment.</p>
+            </div>
 
         );
 
@@ -83,14 +112,10 @@ const ProductDetails = () => {
 
         return (
 
-            <h2
-                style={{
-                    textAlign: "center",
-                    marginTop: "120px",
-                }}
-            >
-                Product Not Found
-            </h2>
+            <div className="product-details-state">
+                <h2>Product Not Found</h2>
+                <p>This product may no longer be available.</p>
+            </div>
 
         );
 

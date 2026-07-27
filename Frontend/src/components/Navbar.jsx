@@ -1,9 +1,11 @@
 ﻿import { Link, useNavigate } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
+import { useNotifications } from "./UI/NotificationProvider";
 import "./Navbar.css";
 
 function Navbar({ darkMode, toggleTheme }) {
   const navigate = useNavigate();
+  const { addNotification } = useNotifications();
 
 const token = localStorage.getItem("token");
 
@@ -20,7 +22,7 @@ const handleLogout = () => {
     localStorage.removeItem("user");
 
     localStorage.removeItem("rememberMe");
-
+    addNotification("Logout successful.", "info");
     navigate("/login");
 
 };
@@ -46,13 +48,16 @@ const handleLogout = () => {
         {/* Right Side */}
         <div className="nav-right">
 
+          <label htmlFor="navbar-search" className="sr-only">Search products</label>
           <input
+            id="navbar-search"
             type="text"
             placeholder="Search..."
             className="search-box"
+            aria-label="Search products"
           />
 
-          <button className="cart-btn">
+          <button type="button" className="cart-btn" aria-label="View cart" title="View cart">
             🛒
           </button>
 
@@ -77,8 +82,11 @@ const handleLogout = () => {
         </span>
 
         <button
+            type="button"
             className="logout-btn"
             onClick={handleLogout}
+            aria-label="Log out"
+            title="Log out"
         >
 
             Logout
@@ -91,7 +99,7 @@ const handleLogout = () => {
 
     <Link to="/login">
 
-        <button className="login-btn">
+        <button type="button" className="login-btn">
 
             Login
 

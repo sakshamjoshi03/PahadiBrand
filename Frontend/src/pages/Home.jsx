@@ -3,10 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 import Hero from "../components/Hero";
 import Card from "../components/Card";
+import EmptyState from "../components/AI/EmptyState";
+import { PackageSearch } from "lucide-react";
 
 import { getAllProducts } from "../services/productService";
 
 import "./Home.css";
+
+const getProductsErrorMessage = (err) => {
+    if (!err.response) {
+        return "Network connection lost. Please check your internet and try again.";
+    }
+
+    if (err.response.status >= 500) {
+        return "Unable to load products. Please try again.";
+    }
+
+    return "Unable to load products.";
+};
 
 export default function Home() {
 
@@ -24,13 +38,11 @@ export default function Home() {
 
                 const response = await getAllProducts();
 
-                setProducts(response.data);
+                setProducts(Array.isArray(response.data) ? response.data : []);
 
             } catch (err) {
 
-                console.error(err);
-
-                setError("Unable to load products.");
+                setError(getProductsErrorMessage(err));
 
             } finally {
 
@@ -57,17 +69,23 @@ export default function Home() {
     if (error) {
 
         return (
-            <h2
-                style={{
-                    textAlign: "center",
-                    marginTop: "150px",
-                    color: "red",
-                }}
-            >
-                {error}
-            </h2>
+            <div className="home-state">
+                <h2>{error}</h2>
+                <p>Please try again in a moment.</p>
+            </div>
         );
 
+    }
+    if (products.length === 0) {
+        return (
+            <div className="home-state">
+                <EmptyState
+                    icon={PackageSearch}
+                    title="No products available"
+                    description="We’re adding new Himalayan products soon. Please check back later for fresh arrivals."
+                />
+            </div>
+        );
     }
 
     return (

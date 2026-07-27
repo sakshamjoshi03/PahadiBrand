@@ -6,30 +6,21 @@ import TypingIndicator from "./TypingIndicator";
 export default function ChatWindow({
   messages,
   loading,
+  messagesEndRef,
 }) {
-
   return (
-
     <div className="chat-window">
-
-      {messages.map((message, index)=>(
-
+      {messages.map((message, index) => (
         <ChatBubble
-
-          key={index}
-
+          key={`${message.role}-${index}`}
           role={message.role}
-
           message={message.content}
-
+          timestamp={message.timestamp}
         />
-
       ))}
 
       {loading && <TypingIndicator />}
-
+      <div ref={messagesEndRef} />
     </div>
-
   );
-
 }

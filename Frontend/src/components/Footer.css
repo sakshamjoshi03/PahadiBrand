@@ -59,3 +59,16 @@ body[data-theme="dark"] .footer {
   box-shadow: 0 -2px 12px rgba(0, 0, 0, .35);
 
 }
+
+@media (max-width: 480px) {
+
+  .footer {
+    padding: 1rem;
+  }
+
+  .footer p {
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+
+}

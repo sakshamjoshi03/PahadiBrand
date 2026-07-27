@@ -1,11 +1,28 @@
 import { useNavigate } from "react-router-dom";
-import { Star } from "lucide-react";
+import { PackageSearch, Star } from "lucide-react";
+import EmptyState from "../AI/EmptyState";
 
 const RelatedProducts = ({ products = [] }) => {
 
     const navigate = useNavigate();
 
-    if (!products.length) return null;
+    if (!products.length) {
+        return (
+            <section className="related-products-section">
+
+                <h2 className="section-title">
+                    Related Products
+                </h2>
+
+                <EmptyState
+                    icon={PackageSearch}
+                    title="No related products available"
+                    description="Explore our full range for more Himalayan favourites."
+                />
+
+            </section>
+        );
+    }
 
     return (
 
@@ -33,7 +50,7 @@ const RelatedProducts = ({ products = [] }) => {
 
                             <img
                                 src={primaryImage?.url}
-                                alt={product.name}
+                                alt={`${product.name} related product`}
                                 className="related-product-image"
                             />
 

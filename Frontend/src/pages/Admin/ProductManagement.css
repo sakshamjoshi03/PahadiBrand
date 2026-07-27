@@ -1,0 +1,59 @@
+.admin-layout{
+    display:flex;
+    min-height:100vh;
+    background:#f7f8f3;
+    overflow-x:hidden;
+}
+
+.admin-content{
+    flex:1;
+    padding:32px;
+    overflow:auto;
+    min-width:0;
+}
+
+.admin-state{
+    text-align:center;
+    padding:70px 20px;
+    color:#666;
+    line-height:1.6;
+}
+
+.admin-state h2{
+    color:#2E7D32;
+    margin-bottom:10px;
+}
+
+.admin-error h2{
+    color:#b91c1c;
+}
+
+@media(max-width:1024px){
+
+    .admin-content{
+        padding:26px;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .admin-layout{
+        flex-direction:column;
+    }
+
+    .admin-content{
+        width:100%;
+        padding:22px 18px;
+        overflow:visible;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .admin-content{
+        padding:18px 12px;
+    }
+
+}

@@ -2,6 +2,7 @@
   padding: 110px 60px 50px;
   min-height: calc(100vh - 170px);
   background: var(--bg);
+  overflow-x: hidden;
 }
 
 /* Dashboard Header */
@@ -22,6 +23,32 @@
   font-size: 42px;
   margin-top: 8px;
   color: var(--text);
+}
+
+.dashboard-state,
+.dashboard-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--secondary);
+  line-height: 1.6;
+}
+
+.dashboard-state {
+  padding: 80px 20px;
+}
+
+.dashboard-state h2 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.error-state h2 {
+  color: #b91c1c;
+}
+
+.dashboard-empty {
+  font-size: 18px;
+  font-weight: 600;
 }
 
 /* ---------- Stats Card ---------- */
@@ -45,6 +72,7 @@
   gap: 18px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
   transition: .3s ease;
+  min-width: 0;
 }
 
 .stats-card:hover {
@@ -155,6 +183,7 @@
   transition: .35s ease;
 
   box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+  min-width: 0;
 
 }
 
@@ -283,6 +312,7 @@
   box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
 
   transition: .35s;
+  min-width: 0;
 
 }
 
@@ -351,6 +381,7 @@
   font-size: 22px;
 
   color: var(--text);
+  overflow-wrap: anywhere;
 
 }
 
@@ -375,6 +406,7 @@
   justify-content: space-between;
 
   align-items: center;
+  gap: 12px;
 
 }
 
@@ -489,6 +521,7 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
 
   transition: .35s;
+  min-width: 0;
 
 }
 
@@ -583,6 +616,7 @@
   gap: 40px;
 
   box-shadow: 0 20px 40px rgba(46, 125, 50, 0.25);
+  min-width: 0;
 }
 
 .welcome-card h2 {
@@ -696,6 +730,7 @@
   font-size: 44px;
   max-width: 520px;
   margin-bottom: 18px;
+  overflow-wrap: anywhere;
 }
 
 .hero-overlay p {
@@ -785,5 +820,75 @@
 .update-card {
 
   border: 1px solid var(--border);
+
+}
+
+@media (max-width:480px) {
+
+  .dashboard-page {
+    padding: 82px 14px 36px;
+  }
+
+  .dashboard-header {
+    margin-bottom: 28px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 28px;
+  }
+
+  .stats-card,
+  .quick-action-card,
+  .update-card {
+    padding: 18px;
+  }
+
+  .stats-icon,
+  .quick-action-icon {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+  }
+
+  .stats-info h2,
+  .member-badge h3 {
+    font-size: 24px;
+  }
+
+  .welcome-card {
+    padding: 24px 18px;
+    border-radius: 18px;
+    gap: 24px;
+  }
+
+  .welcome-card h2 {
+    font-size: 24px;
+  }
+
+  .hero-banner {
+    height: 260px;
+    border-radius: 18px;
+  }
+
+  .hero-overlay {
+    padding: 20px;
+  }
+
+  .hero-overlay h2 {
+    font-size: 24px;
+  }
+
+  .hero-overlay p {
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .product-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 
 }

@@ -9,7 +9,24 @@
   background: var(--bg);
 
   color: var(--text);
+  overflow-x: hidden;
 
+}
+
+.home-state {
+  text-align: center;
+  padding: 140px 20px 80px;
+  color: var(--text);
+}
+
+.home-state h2 {
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.home-state p {
+  color: var(--secondary);
+  line-height: 1.6;
 }
 
 /* =========================================
@@ -71,6 +88,7 @@
   gap: 25px;
 
   margin-bottom: 2rem;
+  min-width: 0;
 
 }
 
@@ -121,6 +139,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
 
   transition: .3s;
+  min-width: 0;
 
 }
 
@@ -182,6 +201,48 @@
 
     font-size: 28px;
 
+}
+
+}
+
+@media (max-width:768px) {
+
+  .collections-section {
+    padding: 4rem 1.25rem 2.5rem;
+  }
+
+  .features-section {
+    padding: 3rem 1.25rem 4rem;
+  }
+
+}
+
+@media (max-width:480px) {
+
+  .collections-section {
+    padding: 3rem 1rem 2rem;
+  }
+
+  .collections-subtitle {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+  }
+
+  .collections-title {
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
+
+  .products-grid {
+    gap: 18px;
+  }
+
+  .feature-item {
+    padding: 18px;
+  }
+
+  .feature-text {
+    font-size: 16px;
   }
 
 }

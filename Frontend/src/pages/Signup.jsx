@@ -1,9 +1,32 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
+import { useNotifications } from "../components/UI/NotificationProvider";
 import "./Signup.css";
 import hero from "../assets/images/hero.jpg";
 import { useEffect } from "react";
+
+const getSignupErrorMessage = (err) => {
+    if (!err.response) {
+        return "Network connection lost. Please check your internet and try again.";
+    }
+
+    if (err.response.status === 409) {
+        return "An account with this email already exists.";
+    }
+
+    if (err.response.status === 400) {
+        return "Please check your details and try again.";
+    }
+
+    if (err.response.status >= 500) {
+        return "Something went wrong. Please try again.";
+    }
+
+    return "Account could not be created. Please try again.";
+};
+
+const isEmailValid = (value) => /\S+@\S+\.\S+/.test(value);
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -17,7 +40,16 @@ const Signup = () => {
     });
 
     const [errors, setErrors] = useState({});
+    const [submitError, setSubmitError] = useState("");
     const [loading, setLoading] = useState(false);
+    const { addNotification } = useNotifications();
+
+    const formIsValid =
+        formData.fullname.trim() &&
+        isEmailValid(formData.email.trim()) &&
+        formData.password.length >= 6 &&
+        formData.password === formData.confirmPassword &&
+        formData.agree;
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -25,6 +57,15 @@ const Signup = () => {
         setFormData((prev) => ({
             ...prev,
             [name]: type === "checkbox" ? checked : value,
+        }));
+
+        setSubmitError("");
+        setErrors((prev) => ({
+            ...prev,
+            [name]: "",
+            ...(name === "password" || name === "confirmPassword"
+                ? { confirmPassword: "" }
+                : {}),
         }));
     };
 
@@ -36,7 +77,7 @@ const Signup = () => {
 
         if (!formData.email.trim())
             temp.email = "Email is required.";
-        else if (!/\S+@\S+\.\S+/.test(formData.email))
+        else if (!isEmailValid(formData.email))
             temp.email = "Invalid email address.";
 
         if (!formData.password)
@@ -61,8 +102,11 @@ const Signup = () => {
 
         e.preventDefault();
 
+        if (loading) return;
+
         if (!validate()) return;
 
+        setSubmitError("");
         setLoading(true);
 
         try {
@@ -93,23 +137,16 @@ const Signup = () => {
 
             );
 
-            alert("Registration Successful!");
-
+            addNotification("Account created successfully. Welcome aboard!", "success");
             navigate("/dashboard");
 
         }
 
         catch (err) {
 
-            console.error(err);
-
-            alert(
-
-                err.response?.data?.message ||
-
-                "Registration failed."
-
-            );
+            const message = getSignupErrorMessage(err);
+            setSubmitError(message);
+            addNotification(message, "error");
 
         }
 
@@ -152,17 +189,25 @@ const Signup = () => {
                     products.
                 </p>
 
-                <form onSubmit={handleSubmit}>
+                {submitError && (
+                    <div className="form-alert">
+                        {submitError}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} noValidate>
 
                     <div className="input-group">
-                        <label>Full Name</label>
+                        <label htmlFor="fullname">Full Name</label>
 
                         <input
+                            id="fullname"
                             type="text"
                             name="fullname"
                             placeholder="Saksham Joshi"
                             value={formData.fullname}
                             onChange={handleChange}
+                            disabled={loading}
                         />
 
                         {errors.fullname && (
@@ -171,14 +216,16 @@ const Signup = () => {
                     </div>
 
                     <div className="input-group">
-                        <label>Email</label>
+                        <label htmlFor="email">Email</label>
 
                         <input
+                            id="email"
                             type="email"
                             name="email"
                             placeholder="example@gmail.com"
                             value={formData.email}
                             onChange={handleChange}
+                            disabled={loading}
                         />
 
                         {errors.email && (
@@ -189,14 +236,16 @@ const Signup = () => {
                     <div className="password-row">
 
                         <div className="input-group">
-                            <label>Password</label>
+                            <label htmlFor="password">Password</label>
 
                             <input
+                                id="password"
                                 type="password"
                                 name="password"
                                 placeholder="********"
                                 value={formData.password}
                                 onChange={handleChange}
+                                disabled={loading}
                             />
 
                             {errors.password && (
@@ -205,14 +254,16 @@ const Signup = () => {
                         </div>
 
                         <div className="input-group">
-                            <label>Confirm Password</label>
+                            <label htmlFor="confirmPassword">Confirm Password</label>
 
                             <input
+                                id="confirmPassword"
                                 type="password"
                                 name="confirmPassword"
                                 placeholder="********"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
+                                disabled={loading}
                             />
 
                             {errors.confirmPassword && (
@@ -227,16 +278,18 @@ const Signup = () => {
                     <div className="checkbox-group">
 
                         <input
+                            id="agree"
                             type="checkbox"
                             name="agree"
                             checked={formData.agree}
                             onChange={handleChange}
+                            disabled={loading}
                         />
 
-                        <span>
+                        <label htmlFor="agree" className="checkbox-label">
                             I agree to the <b>Terms of Service</b> and{" "}
                             <b>Privacy Policy</b>
-                        </span>
+                        </label>
 
                     </div>
 
@@ -247,7 +300,7 @@ const Signup = () => {
                     <button
                     className="signup-btn"
                     type="submit"
-                    disabled={loading}
+                    disabled={loading || !formIsValid}
                     >
 
                     {

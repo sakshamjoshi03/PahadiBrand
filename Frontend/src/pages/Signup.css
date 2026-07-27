@@ -259,6 +259,16 @@
 
 }
 
+.signup-btn:disabled {
+
+    opacity: .65;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
 .signup-btn:active {
 
     transform: scale(.98);
@@ -280,6 +290,26 @@
     color: #ef4444;
 
     font-size: 12px;
+
+}
+
+.form-alert {
+
+    margin-bottom: 16px;
+
+    padding: 10px 12px;
+
+    border-radius: 8px;
+
+    background: #fef2f2;
+
+    color: #b91c1c;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    text-align: left;
 
 }
 

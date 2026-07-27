@@ -1,4 +1,5 @@
-﻿import "./Card.css";
+﻿import { memo } from "react";
+import "./Card.css";
 
 function Card({ image, title, description, price, tag }) {
   return (
@@ -22,7 +23,7 @@ function Card({ image, title, description, price, tag }) {
 
         <h4>{price}</h4>
 
-        <button>
+        <button type="button" aria-label={`Add ${title} to cart`}>
           Add to Cart
         </button>
 

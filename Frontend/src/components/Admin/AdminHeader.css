@@ -1,0 +1,21 @@
+.admin-header{
+    margin-bottom:24px;
+    min-width:0;
+}
+
+.admin-header h2{
+    margin:0;
+    overflow-wrap:anywhere;
+}
+
+@media(max-width:480px){
+
+    .admin-header{
+        margin-bottom:18px;
+    }
+
+    .admin-header h2{
+        font-size:22px;
+    }
+
+}

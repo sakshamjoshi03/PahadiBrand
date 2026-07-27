@@ -61,6 +61,7 @@
 
 .form-group {
   width: 100%;
+  text-align: left;
 }
 
 .form-group input {
@@ -141,6 +142,21 @@
 .login-submit-btn:hover {
   filter: brightness(.9);
   transform: translateY(-2px);
+}
+
+.login-submit-btn:disabled,
+.google-login-btn:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.field-error {
+  display: block;
+  margin-top: 6px;
+  color: #ef4444;
+  font-size: 12px;
+  text-align: left;
 }
 
 /* Footer */

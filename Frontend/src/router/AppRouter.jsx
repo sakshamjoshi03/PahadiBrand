@@ -9,6 +9,7 @@ import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import ProtectedRoute from "./ProtectedRoute";
 import OAuthSuccess from "../pages/OAuthSuccess/OAuthSuccess";
 import YourPahadiBhula from "../pages/YourPahadiBhula/YourPahadiBhula";
+import ProductManagement from "../pages/Admin/ProductManagement";
 
 function AppRouter({ darkMode }) {
   return (
@@ -28,18 +29,29 @@ function AppRouter({ darkMode }) {
         path="/about"
         element={<About darkMode={darkMode} />}
       />
+
       <Route
-      path="/bhula"
-      element={<YourPahadiBhula />}
+        path="/bhula"
+        element={<YourPahadiBhula />}
       />
+
       <Route
-         path="/dashboard"
-         element={
-        <ProtectedRoute>
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
             <Dashboard darkMode={darkMode} />
-        </ProtectedRoute>
-    }
-/>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/products"
+        element={
+          <ProtectedRoute>
+            <ProductManagement />
+          </ProtectedRoute>
+        }
+      />
 
       <Route
         path="/login"
@@ -50,6 +62,7 @@ function AppRouter({ darkMode }) {
         path="/signup"
         element={<Signup darkMode={darkMode} />}
       />
+
       <Route
         path="/oauth-success"
         element={<OAuthSuccess />}

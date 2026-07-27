@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AppRouter from "./router/AppRouter";
+import { NotificationProvider } from "./components/UI/NotificationProvider";
 
 
 function App() {
@@ -22,16 +23,20 @@ function App() {
   }, [darkMode]);
 
   return (
-    <div className={darkMode ? "dark-theme" : "light-theme"}>
-      <Navbar
-        darkMode={darkMode}
-        toggleTheme={toggleTheme}
-      />
+    <NotificationProvider>
+      <div className={darkMode ? "dark-theme" : "light-theme"}>
+        <Navbar
+          darkMode={darkMode}
+          toggleTheme={toggleTheme}
+        />
 
-      <AppRouter />
+        <main id="main-content" className="app-main">
+          <AppRouter />
+        </main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </NotificationProvider>
   );
 }
 

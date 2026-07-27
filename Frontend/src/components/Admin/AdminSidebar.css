@@ -1,0 +1,28 @@
+.admin-sidebar{
+    flex:0 0 220px;
+    padding:32px 20px;
+    min-width:0;
+}
+
+.admin-sidebar p{
+    margin:0;
+    overflow-wrap:anywhere;
+}
+
+@media(max-width:768px){
+
+    .admin-sidebar{
+        flex:0 0 auto;
+        width:100%;
+        padding:18px;
+    }
+
+}
+
+@media(max-width:480px){
+
+    .admin-sidebar{
+        padding:14px 12px;
+    }
+
+}

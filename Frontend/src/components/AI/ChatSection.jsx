@@ -1,53 +1,77 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ChatWindow from "./ChatWindow";
 import ChatInput from "./ChatInput";
 import { sendMessage } from "../../services/aiService";
+import { useNotifications } from "../UI/NotificationProvider";
 import "./ChatSection.css";
+
+const getChatErrorMessage = (error) => {
+    if (!error.response) {
+        return "Network connection lost. Please check your internet and try again.";
+    }
+
+    if (error.response.status >= 500) {
+        return "Something went wrong while generating a response. Please try again.";
+    }
+
+    return "I couldn't generate a response. Please try again.";
+};
 
 const ChatSection = () => {
     const [messages, setMessages] = useState([
         {
             role: "assistant",
             content:
-                "🙏 Namaste! I'm Your Pahadi Bhula. Ask me anything about Himalayan products, recipes, wellness, culture, or PahadiBrand products!",
+                "Namaste! I'm Your Pahadi Bhula. Ask me anything about Himalayan products, recipes, wellness, culture, or PahadiBrand products!",
+            timestamp: new Date().toISOString(),
         },
     ]);
 
     const [loading, setLoading] = useState(false);
+    const [lastSentMessage, setLastSentMessage] = useState("");
+    const { addNotification } = useNotifications();
+    const messagesEndRef = useRef(null);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages, loading]);
 
     const handleSendMessage = async (message) => {
-        if (!message.trim() || loading) return;
+        const trimmed = message.trim();
+        if (!trimmed || loading || trimmed === lastSentMessage) return;
 
         const userMessage = {
             role: "user",
-            content: message.trim(),
+            content: trimmed,
+            timestamp: new Date().toISOString(),
         };
 
-        // Display user message immediately
         setMessages((prev) => [...prev, userMessage]);
+        setLastSentMessage(trimmed);
         setLoading(true);
 
         try {
-            const reply = await sendMessage(message.trim());
+            const reply = await sendMessage(trimmed);
 
             setMessages((prev) => [
                 ...prev,
                 {
                     role: "assistant",
                     content: reply || "I couldn't generate a response.",
+                    timestamp: new Date().toISOString(),
                 },
             ]);
+            addNotification("AI response generated successfully.", "success");
         } catch (error) {
-            console.error("AI Error:", error);
-
             setMessages((prev) => [
                 ...prev,
                 {
                     role: "assistant",
-                    content:
-                        "⚠️ Sorry, I'm currently unavailable. Please try again in a few moments.",
+                    content: getChatErrorMessage(error),
+                    timestamp: new Date().toISOString(),
                 },
             ]);
+            addNotification(getChatErrorMessage(error), "error");
         } finally {
             setLoading(false);
         }
@@ -71,7 +95,7 @@ const ChatSection = () => {
                         disabled={loading}
                         onClick={() => handleSendMessage(chip)}
                     >
-                        {chip}
+                        {loading ? "Generating..." : chip}
                     </button>
                 ))}
             </div>
@@ -79,6 +103,7 @@ const ChatSection = () => {
             <ChatWindow
                 messages={messages}
                 loading={loading}
+                messagesEndRef={messagesEndRef}
             />
 
             <ChatInput
