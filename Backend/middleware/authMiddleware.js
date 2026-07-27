@@ -37,7 +37,21 @@ const verifyToken = async (req, res, next) => {
             process.env.JWT_SECRET
         );
 
-        req.user = await User.findById(decoded.id).select("-password");
+        const user = await User.findById(decoded.id).select("-password");
+
+        if (!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid or expired token."
+            });
+        }
+
+        if (!user.role || user.role !== "admin") {
+            user.role = "user";
+            await user.save();
+        }
+
+        req.user = user;
 
         next();
 

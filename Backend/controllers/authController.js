@@ -4,6 +4,16 @@ const User = require("../models/User");
 
 const generateToken = require("../utils/generateToken");
 
+const normalizeUserRole = async (user) => {
+    const normalizedRole = user.role === "admin" ? "admin" : "user";
+
+    if (!user.role || user.role !== normalizedRole) {
+        user.role = normalizedRole;
+        await user.save();
+    }
+
+    return normalizedRole;
+};
 
 // ======================================
 // REGISTER USER
@@ -66,13 +76,18 @@ const registerUser = async (req, res) => {
 
             email,
 
-            password: hashedPassword
+            password: hashedPassword,
+            role: "user"
 
         });
 
+        const normalizedRole = await normalizeUserRole(user);
+
         const token = generateToken(
 
-            user._id
+            user._id,
+
+            normalizedRole
 
         );
 
@@ -92,7 +107,7 @@ const registerUser = async (req, res) => {
 
                 email: user.email,
 
-                role: user.role
+                role: normalizedRole
 
             }
 
@@ -178,9 +193,13 @@ const loginUser = async (req, res) => {
 
         }
 
+        const normalizedRole = await normalizeUserRole(user);
+
         const token = generateToken(
 
-            user._id
+            user._id,
+
+            normalizedRole
 
         );
 
@@ -200,7 +219,7 @@ const loginUser = async (req, res) => {
 
                 email: user.email,
 
-                role: user.role
+                role: normalizedRole
 
             }
 
@@ -231,7 +250,9 @@ const googleCallback = async (req, res) => {
 
         const user = req.user;
 
-        const token = generateToken(user._id);
+        const normalizedRole = user.role === "admin" ? "admin" : "user";
+
+        const token = generateToken(user._id, normalizedRole);
 
         const frontendURL =
             `http://localhost:5173/oauth-success?token=${token}`;

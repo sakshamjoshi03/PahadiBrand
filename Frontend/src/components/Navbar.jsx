@@ -14,6 +14,7 @@ const user = JSON.parse(
     localStorage.getItem("user") || "null"
 
 );
+const isAdmin = Boolean(token) && user?.role === "admin";
 
 const handleLogout = () => {
 
@@ -43,6 +44,7 @@ const handleLogout = () => {
             AI Assistant
           </Link>
           <Link to="/dashboard">Dashboard</Link>
+          {isAdmin && <Link to="/admin/products">Admin</Link>}
         </nav>
 
         {/* Right Side */}

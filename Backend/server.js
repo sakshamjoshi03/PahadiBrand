@@ -3,10 +3,12 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 require("./config/passport");
 
 const connectDB = require("./config/db");
+const User = require("./models/User");
 
 const productRoutes = require("./routes/productRoutes");
 const authRoutes = require("./routes/authRoutes");
@@ -15,7 +17,28 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-connectDB();
+const ensureDefaultAdmin = async () => {
+    try {
+        const existingAdmin = await User.findOne({ email: "admin@pahadibrand.com" });
+
+        if (existingAdmin) {
+            return;
+        }
+
+        const hashedPassword = await bcrypt.hash("Admin@123", 10);
+
+        await User.create({
+            name: "Admin",
+            email: "admin@pahadibrand.com",
+            password: hashedPassword,
+            role: "admin"
+        });
+
+        console.log("✅ Default admin account created");
+    } catch (error) {
+        console.error("❌ Failed to initialize default admin account", error);
+    }
+};
 
 app.use(
     cors({
@@ -56,6 +79,18 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+const startServer = async () => {
+    try {
+        await connectDB();
+        await ensureDefaultAdmin();
+
+        app.listen(PORT, () => {
+            console.log(`🚀 Server running on http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("❌ Server startup failed", error);
+        process.exit(1);
+    }
+};
+
+startServer();

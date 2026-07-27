@@ -9,7 +9,8 @@ const {
     getRelatedProducts,
     loadDemoProducts
 } = require("../controllers/productController");
-
+const verifyToken = require("../middleware/authMiddleware");
+const requireAdmin = require("../middleware/adminMiddleware");
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ router.get("/related/:category/:id", getRelatedProducts);
 router
     .route("/")
     .get(getAllProducts)
-    .post(createProduct);
+    .post(verifyToken, requireAdmin, createProduct);
 
   
 // GET PRODUCT BY ID
@@ -43,7 +44,7 @@ router
 router
     .route("/:id")
     .get(getProductById)
-    .put(updateProduct)
-    .delete(deleteProduct);
+    .put(verifyToken, requireAdmin, updateProduct)
+    .delete(verifyToken, requireAdmin, deleteProduct);
 
 module.exports = router;

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "../pages/Home";
 import About from "../pages/About/About";
@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import ProductDetails from "../pages/ProductDetails/ProductDetails";
 import ProtectedRoute from "./ProtectedRoute";
+import AdminRoute from "./AdminRoute";
 import OAuthSuccess from "../pages/OAuthSuccess/OAuthSuccess";
 import YourPahadiBhula from "../pages/YourPahadiBhula/YourPahadiBhula";
 import ProductManagement from "../pages/Admin/ProductManagement";
@@ -45,11 +46,29 @@ function AppRouter({ darkMode }) {
       />
 
       <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <Navigate to="/admin/products" replace />
+          </AdminRoute>
+        }
+      />
+
+      <Route
+        path="/admin/dashboard"
+        element={
+          <AdminRoute>
+            <Navigate to="/admin/products" replace />
+          </AdminRoute>
+        }
+      />
+
+      <Route
         path="/admin/products"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <ProductManagement />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       />
 

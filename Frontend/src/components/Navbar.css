@@ -71,6 +71,10 @@
     border-radius: 999px;
 }
 
+body[data-theme="dark"] .nav-links a {
+    color: rgba(255, 255, 255, 0.92);
+}
+
 .nav-links a:hover {
     color: var(--primary);
     background: rgba(46, 125, 50, 0.12);
@@ -263,10 +267,14 @@
 
     font-weight:600;
 
-    color:#2e7d32;
+    color: var(--text);
 
     white-space:nowrap;
 
+}
+
+body[data-theme="dark"] .user-name {
+    color: rgba(255, 255, 255, 0.92);
 }
 
 .logout-btn{
