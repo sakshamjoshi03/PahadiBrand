@@ -28,6 +28,26 @@
     color:#b91c1c;
 }
 
+.admin-toolbar-actions{
+    display:flex;
+    justify-content:flex-end;
+    margin:18px 0 10px;
+}
+
+.add-product-btn{
+    border:none;
+    background:#2E7D32;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+.add-product-btn:hover{
+    background:#256728;
+}
+
 @media(max-width:1024px){
 
     .admin-content{
@@ -46,6 +66,10 @@
         width:100%;
         padding:22px 18px;
         overflow:visible;
+    }
+
+    .admin-toolbar-actions{
+        justify-content:flex-start;
     }
 
 }

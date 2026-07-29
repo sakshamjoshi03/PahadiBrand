@@ -2,6 +2,16 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/products";
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+
+  return token
+    ? {
+        Authorization: `Bearer ${token}`,
+      }
+    : {};
+};
+
 // GET /api/products
 export const getAllProducts = async () => {
   const response = await axios.get(API_URL);
@@ -23,19 +33,25 @@ export const getProductById = async (id) => {
 
 // POST /api/products
 export const createProduct = async (productData) => {
-  const response = await axios.post(API_URL, productData);
+  const response = await axios.post(API_URL, productData, {
+    headers: getAuthHeaders(),
+  });
   return response.data;
 };
 
 // PUT /api/products/:id
 export const updateProduct = async (id, productData) => {
-  const response = await axios.put(`${API_URL}/${id}`, productData);
+  const response = await axios.put(`${API_URL}/${id}`, productData, {
+    headers: getAuthHeaders(),
+  });
   return response.data;
 };
 
 // DELETE /api/products/:id
 export const deleteProduct = async (id) => {
-  const response = await axios.delete(`${API_URL}/${id}`);
+  const response = await axios.delete(`${API_URL}/${id}`, {
+    headers: getAuthHeaders(),
+  });
   return response.data;
 };
 

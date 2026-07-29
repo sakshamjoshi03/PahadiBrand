@@ -199,6 +199,24 @@
 
 }
 
+.image-help{
+    color:#666;
+    font-size:13px;
+    margin:-6px 0 12px;
+}
+
+.image-input-row{
+    margin-bottom:12px;
+}
+
+.image-input-row input{
+    width:100%;
+    padding:12px 14px;
+    border:1px solid #d8d8d8;
+    border-radius:8px;
+    font-size:15px;
+}
+
 .dynamic-input{
 
     display:flex;

@@ -5,6 +5,7 @@ import AdminHeader from "../../components/Admin/AdminHeader";
 import StatsCards from "../../components/Admin/StatsCards";
 import SearchToolbar from "../../components/Admin/SearchToolbar";
 import ProductTable from "../../components/Admin/ProductTable";
+import AddProductModal from "../../components/Admin/AddProductModal";
 import { getAllProducts } from "../../services/productService";
 
 import "./ProductManagement.css";
@@ -34,6 +35,7 @@ export default function ProductManagement() {
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const productsPerPage = 10;
 
@@ -84,6 +86,16 @@ export default function ProductManagement() {
                     <>
                         <StatsCards products={products} />
 
+                        <div className="admin-toolbar-actions">
+                            <button
+                                type="button"
+                                className="add-product-btn"
+                                onClick={() => setIsAddModalOpen(true)}
+                            >
+                                + Add Product
+                            </button>
+                        </div>
+
                         <SearchToolbar
                             search={search}
                             setSearch={setSearch}
@@ -106,6 +118,12 @@ export default function ProductManagement() {
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
                             productsPerPage={productsPerPage}
+                        />
+
+                        <AddProductModal
+                            open={isAddModalOpen}
+                            onClose={() => setIsAddModalOpen(false)}
+                            onCreated={fetchProducts}
                         />
                     </>
                 )}

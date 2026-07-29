@@ -263,15 +263,16 @@ export default function ProductDrawer({
 
                             {product.specifications?.length ? (
 
-                                product.specifications.map((spec, index) => (
-
-                                    <li key={index}>
-
-                                        {spec}
-
-                                    </li>
-
-                                ))
+                                product.specifications.map((spec, index) => {
+                                    const displayText = (spec && typeof spec === "object")
+                                        ? `${spec.key}: ${spec.value}`
+                                        : (spec || "");
+                                    return (
+                                        <li key={index}>
+                                            {displayText}
+                                        </li>
+                                    );
+                                })
 
                             ) : (
 
@@ -297,9 +298,11 @@ export default function ProductDrawer({
 
                         <p>
 
-                            {product.sustainability ||
-
-                                "Not Available"}
+                            {product.sustainability
+                                ? (typeof product.sustainability === "object"
+                                    ? product.sustainability.description || product.sustainability.title || "Not Available"
+                                    : product.sustainability)
+                                : "Not Available"}
 
                         </p>
 

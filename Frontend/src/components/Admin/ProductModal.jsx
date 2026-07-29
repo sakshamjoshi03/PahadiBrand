@@ -77,6 +77,17 @@ export default function ProductModal({
 
         if (product) {
 
+            const sustainabilityStr = (product.sustainability && typeof product.sustainability === "object")
+                ? (product.sustainability.description || product.sustainability.title || "")
+                : (product.sustainability || "");
+
+            const specsStrArr = (product.specifications || []).map(spec => {
+                if (spec && typeof spec === "object") {
+                    return `${spec.key}: ${spec.value}`;
+                }
+                return spec || "";
+            });
+
             setFormData({
 
                 name: product.name || "",
@@ -93,11 +104,11 @@ export default function ProductModal({
 
                 harvestSeason: product.harvestSeason || "",
 
-                sustainability: product.sustainability || "",
+                sustainability: sustainabilityStr,
 
                 features: product.features || [],
 
-                specifications: product.specifications || [],
+                specifications: specsStrArr,
 
             });
 
@@ -263,11 +274,36 @@ export default function ProductModal({
 
         try {
 
+            const normalizedSpecs = formData.specifications
+                .filter(Boolean)
+                .map(spec => {
+                    if (spec && typeof spec === "object") {
+                        return spec;
+                    }
+                    const idx = spec.indexOf(":");
+                    if (idx !== -1) {
+                        return {
+                            key: spec.substring(0, idx).trim(),
+                            value: spec.substring(idx + 1).trim()
+                        };
+                    }
+                    return { key: "Detail", value: spec.trim() };
+                });
+
+            const normalizedSustainability = formData.sustainability.trim()
+                ? { title: "Sustainability Commitment", description: formData.sustainability.trim() }
+                : { title: "", description: "" };
+
             await updateProduct(
 
                 product._id,
 
-                formData
+                {
+                    ...formData,
+                    features: formData.features.filter(Boolean),
+                    specifications: normalizedSpecs,
+                    sustainability: normalizedSustainability
+                }
 
             );
 

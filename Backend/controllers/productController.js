@@ -1,5 +1,22 @@
 const Product = require("../models/Product");
 
+const generateUniqueSlug = async (name) => {
+    const baseSlug = String(name || "product")
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "") || "product";
+
+    let slug = baseSlug;
+    let suffix = 1;
+
+    while (await Product.findOne({ slug })) {
+        slug = `${baseSlug}-${suffix}`;
+        suffix += 1;
+    }
+
+    return slug;
+};
 
 // GET ALL PRODUCTS
 // GET /api/products
@@ -92,10 +109,12 @@ const createProduct = async (req, res) => {
             });
         }
 
+        const finalSlug = slug || await generateUniqueSlug(name);
+
         const newProduct = await Product.create({
 
             name,
-            slug,
+            slug: finalSlug,
             category,
             price,
             stock,

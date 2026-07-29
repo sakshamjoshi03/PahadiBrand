@@ -1,6 +1,21 @@
 import { useState } from "react";
 import { X, Plus, Trash2 } from "lucide-react";
 
+const initialFormData = {
+    name: "",
+    category: "",
+    price: "",
+    stock: "",
+    description: "",
+    origin: "",
+    harvestSeason: "",
+    sustainability: "",
+    features: [],
+    specifications: [],
+};
+
+const initialImageUrls = ["", "", "", ""];
+
 import { createProduct } from "../../services/productService";
 import { useNotifications } from "../UI/NotificationProvider";
 
@@ -32,29 +47,8 @@ export default function AddProductModal({
 
 }) {
 
-    const [formData, setFormData] = useState({
-
-        name: "",
-
-        category: "",
-
-        price: "",
-
-        stock: "",
-
-        description: "",
-
-        origin: "",
-
-        harvestSeason: "",
-
-        sustainability: "",
-
-        features: [],
-
-        specifications: [],
-
-    });
+    const [formData, setFormData] = useState(initialFormData);
+    const [imageUrls, setImageUrls] = useState(initialImageUrls);
 
     const [errors, setErrors] = useState({});
     const [submitError, setSubmitError] = useState("");
@@ -111,6 +105,25 @@ export default function AddProductModal({
             [name]: "",
         }));
 
+    };
+
+    const handleImageUrlChange = (index, value) => {
+        const nextImages = [...imageUrls];
+        nextImages[index] = value;
+        setImageUrls(nextImages);
+        setSubmitError("");
+    };
+
+    const resetForm = () => {
+        setFormData(initialFormData);
+        setImageUrls(initialImageUrls);
+        setErrors({});
+        setSubmitError("");
+    };
+
+    const handleClose = () => {
+        resetForm();
+        onClose();
     };
 
     const addFeature = () => {
@@ -205,9 +218,48 @@ export default function AddProductModal({
         setSaving(true);
 
         try {
+            const normalizedImages = imageUrls
+                .map((url, index) => {
+                    const trimmedUrl = url.trim();
 
-            await createProduct(formData);
+                    if (!trimmedUrl) {
+                        return null;
+                    }
+
+                    return {
+                        url: trimmedUrl,
+                        alt: `${formData.name.trim() || "Product"} image ${index + 1}`,
+                        isPrimary: index === 0,
+                    };
+                })
+                .filter(Boolean);
+
+            const normalizedSpecs = formData.specifications
+                .filter(Boolean)
+                .map(spec => {
+                    const idx = spec.indexOf(":");
+                    if (idx !== -1) {
+                        return {
+                            key: spec.substring(0, idx).trim(),
+                            value: spec.substring(idx + 1).trim()
+                        };
+                    }
+                    return { key: "Detail", value: spec.trim() };
+                });
+
+            const normalizedSustainability = formData.sustainability.trim()
+                ? { title: "Sustainability Commitment", description: formData.sustainability.trim() }
+                : { title: "", description: "" };
+
+            await createProduct({
+                ...formData,
+                images: normalizedImages,
+                features: formData.features.filter(Boolean),
+                specifications: normalizedSpecs,
+                sustainability: normalizedSustainability,
+            });
             addNotification("Product created successfully.", "success");
+            resetForm();
             onCreated();
             onClose();
 
@@ -248,7 +300,7 @@ export default function AddProductModal({
                     <button
                         type="button"
                         className="close-btn"
-                        onClick={onClose}
+                        onClick={handleClose}
                         aria-label="Close add product dialog"
                     >
 
@@ -424,6 +476,27 @@ export default function AddProductModal({
 
                     />
 
+                    <h3>Product Images</h3>
+                    <p className="image-help">
+                        Add up to four image URLs so the product will show a full gallery on its detail page.
+                    </p>
+
+                    {imageUrls.map((imageUrl, index) => (
+                        <div className="image-input-row" key={index}>
+                            <label htmlFor={`image-${index + 1}`} className="sr-only">
+                                Image {index + 1}
+                            </label>
+                            <input
+                                id={`image-${index + 1}`}
+                                type="url"
+                                placeholder={`Image ${index + 1} URL`}
+                                value={imageUrl}
+                                onChange={(e) => handleImageUrlChange(index, e.target.value)}
+                                disabled={saving}
+                            />
+                        </div>
+                    ))}
+
                     <h3>Features</h3>
 
                     {
@@ -560,7 +633,7 @@ export default function AddProductModal({
 
                             className="cancel-btn"
 
-                            onClick={onClose}
+                            onClick={handleClose}
 
                             disabled={saving}
 
