@@ -12,7 +12,7 @@
 
 }
 
-.dark-theme{
+body[data-theme="dark"]{
 
 --bg-primary:#11161A;
 

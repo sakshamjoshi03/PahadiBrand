@@ -1,4 +1,4 @@
-﻿/* =========================================
+/* =========================================
                 NAVBAR
 ========================================= */
 
@@ -15,7 +15,7 @@
     box-shadow: 0 8px 32px rgba(15, 23, 42, 0.08);
 }
 
-.dark-theme .navbar {
+body[data-theme="dark"] .navbar {
     background: rgba(10, 16, 29, 0.24);
     border-bottom: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow: 0 8px 32px rgba(2, 6, 23, 0.24);

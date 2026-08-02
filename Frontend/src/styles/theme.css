@@ -58,7 +58,7 @@
 --transition:.35s ease;
 
 }
-.dark-theme{
+body[data-theme="dark"]{
 
 --bg-primary:#0F1517;
 

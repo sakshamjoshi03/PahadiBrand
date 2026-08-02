@@ -7,11 +7,17 @@ import { NotificationProvider } from "./components/UI/NotificationProvider";
 
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
 
   // Toggle Theme
   const toggleTheme = () => {
-    setDarkMode((prev) => !prev);
+    setDarkMode((prev) => {
+      const nextMode = !prev;
+      localStorage.setItem("theme", nextMode ? "dark" : "light");
+      return nextMode;
+    });
   };
 
   // Apply theme to body
