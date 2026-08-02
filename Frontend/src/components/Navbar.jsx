@@ -1,4 +1,4 @@
-﻿import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import { Moon, Sun } from "lucide-react";
 import { useNotifications } from "./UI/NotificationProvider";
 import "./Navbar.css";
@@ -6,6 +6,28 @@ import "./Navbar.css";
 function Navbar({ darkMode, toggleTheme }) {
   const navigate = useNavigate();
   const { addNotification } = useNotifications();
+  const [searchParams] = useSearchParams();
+  const location = useLocation();
+
+  const searchQuery = searchParams.get("search") || "";
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    const path = location.pathname;
+    if (path === "/dashboard") {
+      if (value) {
+        navigate(`/dashboard?search=${encodeURIComponent(value)}`, { replace: true });
+      } else {
+        navigate(`/dashboard`, { replace: true });
+      }
+    } else {
+      if (value) {
+        navigate(`/?search=${encodeURIComponent(value)}`, { replace: true });
+      } else {
+        navigate(`/`, { replace: true });
+      }
+    }
+  };
 
 const token = localStorage.getItem("token");
 
@@ -54,6 +76,8 @@ const handleLogout = () => {
           <input
             id="navbar-search"
             type="text"
+            value={searchQuery}
+            onChange={handleSearchChange}
             placeholder="Search..."
             className="search-box"
             aria-label="Search products"

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import "./Dashboard.css";
 
 import hero from "../../assets/images/hero.jpg";
@@ -38,11 +39,21 @@ const getDashboardErrorMessage = (error) => {
 };
 
 export default function Dashboard() {
+  const [searchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") || "";
 
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [userName, setUserName] = useState("User");
+
+  const filteredProducts = products.filter((product) => {
+    const query = searchQuery.toLowerCase();
+    return (
+      product.name?.toLowerCase().includes(query) ||
+      product.category?.toLowerCase().includes(query)
+    );
+  });
 
 
 useEffect(() => {
@@ -235,7 +246,7 @@ useEffect(() => {
 
       {/* Stats */}
 
-      <div className="stats-grid">
+      <div className="db-stats-grid">
 
         {stats.map((item, index) => (
           <StatsCard key={index} {...item} />
@@ -282,10 +293,8 @@ useEffect(() => {
 
       </div>
 
-      {/* Products */}
-
       <h2 className="section-title">
-        Recently Viewed
+        {searchQuery ? "Search Results" : "Recently Viewed"}
       </h2>
 
       <div className="products-grid">
@@ -296,9 +305,17 @@ useEffect(() => {
             title="No data available"
             description="Your dashboard will populate as soon as fresh Himalayan products are added."
           />
+        ) : filteredProducts.length === 0 ? (
+          <div style={{ padding: "20px 0", width: "100%", gridColumn: "1 / -1" }}>
+            <EmptyState
+              icon={PackageOpen}
+              title="No matching products found"
+              description={`We couldn't find any products matching "${searchQuery}".`}
+            />
+          </div>
         ) : (
 
-          products.slice(0, 3).map((item) => (
+          filteredProducts.slice(0, 3).map((item) => (
           <ProductCard
 
               key={item._id}

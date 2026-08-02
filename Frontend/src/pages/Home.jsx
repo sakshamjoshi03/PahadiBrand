@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import Hero from "../components/Hero";
 import Card from "../components/Card";
@@ -25,10 +25,21 @@ const getProductsErrorMessage = (err) => {
 export default function Home() {
 
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const searchQuery = searchParams.get("search") || "";
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
+    const filteredProducts = products.filter((product) => {
+        const query = searchQuery.toLowerCase();
+        return (
+            product.name?.toLowerCase().includes(query) ||
+            product.category?.toLowerCase().includes(query) ||
+            product.description?.toLowerCase().includes(query)
+        );
+    });
 
     useEffect(() => {
 
@@ -104,35 +115,45 @@ export default function Home() {
                     Our Signature Collections
                 </h2>
 
-                <div className="products-grid">
+                {filteredProducts.length === 0 ? (
+                    <div style={{ padding: "40px 0", width: "100%" }}>
+                        <EmptyState
+                            icon={PackageSearch}
+                            title="No matching products found"
+                            description={`We couldn't find any products matching "${searchQuery}". Try adjusting your keywords.`}
+                        />
+                    </div>
+                ) : (
+                    <div className="products-grid">
 
-                    {products.map((product) => (
+                        {filteredProducts.map((product) => (
 
-                        <div
-                            key={product._id}
-                            onClick={() => navigate(`/products/${product._id}`)}
-                            style={{ cursor: "pointer" }}
-                        >
+                            <div
+                                key={product._id}
+                                onClick={() => navigate(`/products/${product._id}`)}
+                                style={{ cursor: "pointer" }}
+                            >
 
-                            <Card
-                                image={
-                                    product.images?.find(
-                                        (img) => img.isPrimary
-                                    )?.url ||
-                                    product.images?.[0]?.url ||
-                                    "/product-images/buransh/main.png"
-                                }
-                                title={product.name}
-                                description={product.description}
-                                price={`₹${product.price}`}
-                                tag={product.category}
-                            />
+                                <Card
+                                    image={
+                                        product.images?.find(
+                                            (img) => img.isPrimary
+                                        )?.url ||
+                                        product.images?.[0]?.url ||
+                                        "/product-images/buransh/main.png"
+                                    }
+                                    title={product.name}
+                                    description={product.description}
+                                    price={`₹${product.price}`}
+                                    tag={product.category}
+                                />
 
-                        </div>
+                            </div>
 
-                    ))}
+                        ))}
 
-                </div>
+                    </div>
+                )}
 
             </section>
 

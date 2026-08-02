@@ -53,7 +53,7 @@
 
 /* ---------- Stats Card ---------- */
 
-.stats-grid {
+.db-stats-grid {
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -63,7 +63,7 @@
 
 }
 
-.stats-card {
+.db-stats-card {
   background: var(--card);
   border-radius: 18px;
   padding: 22px;
@@ -75,12 +75,12 @@
   min-width: 0;
 }
 
-.stats-card:hover {
+.db-stats-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 18px 35px rgba(0, 0, 0, .12);
 }
 
-.stats-icon {
+.db-stats-icon {
 
   width: 62px;
   height: 62px;
@@ -93,7 +93,7 @@
 
 }
 
-.stats-info h2 {
+.db-stats-info h2 {
 
   margin: 0;
 
@@ -102,7 +102,7 @@
   color: var(--text);
 }
 
-.stats-info p {
+.db-stats-info p {
 
   margin-top: 5px;
 
@@ -116,7 +116,7 @@
 
 @media(max-width:992px) {
 
-  .stats-grid {
+  .db-stats-grid {
 
     grid-template-columns: repeat(2, 1fr);
 
@@ -146,7 +146,7 @@
 
   }
 
-  .stats-grid {
+  .db-stats-grid {
 
     grid-template-columns: 1fr;
 
@@ -814,7 +814,7 @@
 
 }
 
-.stats-card,
+.db-stats-card,
 .quick-action-card,
 .product-card,
 .update-card {
@@ -837,20 +837,20 @@
     font-size: 28px;
   }
 
-  .stats-card,
+  .db-stats-card,
   .quick-action-card,
   .update-card {
     padding: 18px;
   }
 
-  .stats-icon,
+  .db-stats-icon,
   .quick-action-icon {
     width: 52px;
     height: 52px;
     flex: 0 0 52px;
   }
 
-  .stats-info h2,
+  .db-stats-info h2,
   .member-badge h3 {
     font-size: 24px;
   }

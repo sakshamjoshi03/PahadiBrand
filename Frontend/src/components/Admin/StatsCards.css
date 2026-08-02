@@ -5,6 +5,13 @@
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
 
     gap:20px;
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:20px;
 
     margin-bottom:30px;
 
@@ -12,7 +19,7 @@
 
 .stats-card{
 
-    background:white;
+    background: var(--card);
 
     border-radius:16px;
 
@@ -25,6 +32,7 @@
     gap:18px;
 
     box-shadow:0 8px 25px rgba(0,0,0,.08);
+    border: 1px solid var(--border);
 
     transition:.3s;
     min-width:0;
@@ -47,7 +55,7 @@
 
     border-radius:50%;
 
-    background:#fff2eb;
+    background: rgba(255, 107, 53, 0.15);
 
     color:#ff6b35;
 
@@ -61,7 +69,7 @@
 
 .stats-title{
 
-    color:#777;
+    color: var(--secondary);
 
     font-size:14px;
 
@@ -75,7 +83,7 @@
 
     font-weight:700;
 
-    color:#222;
+    color: var(--text);
     overflow-wrap:anywhere;
 
 }
