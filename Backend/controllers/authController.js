@@ -254,8 +254,9 @@ const googleCallback = async (req, res) => {
 
         const token = generateToken(user._id, normalizedRole);
 
-        const frontendURL =
-            `http://localhost:5173/oauth-success?token=${token}`;
+        const frontendURL = process.env.FRONTEND_URL
+            ? `${process.env.FRONTEND_URL}/oauth-success?token=${token}`
+            : `http://localhost:5173/oauth-success?token=${token}`;
 
         res.redirect(frontendURL);
 
@@ -264,7 +265,9 @@ const googleCallback = async (req, res) => {
     catch (error) {
 
         res.redirect(
-            "http://localhost:5173/login?error=google_auth_failed"
+            process.env.FRONTEND_URL
+                ? `${process.env.FRONTEND_URL}/login?error=google_auth_failed`
+                : "http://localhost:5173/login?error=google_auth_failed"
         );
 
     }

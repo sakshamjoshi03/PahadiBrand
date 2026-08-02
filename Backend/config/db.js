@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const dns = require("dns");
 
-// Set the DNS server to use for resolving hostnames
-dns.setServers(["8.8.8.8"]);
+// Set the DNS server to use for resolving hostnames in non-production environments
+if (process.env.NODE_ENV !== "production") {
+  dns.setServers(["8.8.8.8"]);
+}
 
 const connectDB = async () => {
   try {

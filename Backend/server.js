@@ -17,6 +17,8 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 const ensureDefaultAdmin = async () => {
     try {
         const existingAdmin = await User.findOne({ email: "admin@pahadibrand.com" });
@@ -42,7 +44,7 @@ const ensureDefaultAdmin = async () => {
 
 app.use(
     cors({
-        origin:"http://localhost:5173",
+        origin: process.env.FRONTEND_URL || "http://localhost:5173",
         credentials: true,
     })
 );
