@@ -67,6 +67,13 @@ export default function Home() {
 
     }, []);
 
+    const handleExploreClick = () => {
+        const collectionsSection = document.querySelector(".collections-section");
+        if (collectionsSection) {
+            collectionsSection.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     if (loading) {
 
         return (
@@ -103,7 +110,7 @@ export default function Home() {
 
         <div className="home-container">
 
-            <Hero />
+            <Hero onExploreClick={handleExploreClick} />
 
             <section className="collections-section">
 

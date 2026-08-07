@@ -1,6 +1,9 @@
-﻿import "./Hero.css";
+import { useNavigate } from "react-router-dom";
+import "./Hero.css";
 
-function Hero() {
+function Hero({ onExploreClick }) {
+  const navigate = useNavigate();
+
   return (
     <section className="hero" aria-labelledby="hero-heading">
 
@@ -20,11 +23,19 @@ function Hero() {
 
         <div className="hero-buttons">
 
-          <button type="button" className="primary-btn">
+          <button 
+            type="button" 
+            className="primary-btn"
+            onClick={onExploreClick}
+          >
             Explore Collection
           </button>
 
-          <button type="button" className="secondary-btn">
+          <button 
+            type="button" 
+            className="secondary-btn"
+            onClick={() => navigate("/about")}
+          >
             Learn More
           </button>
 
