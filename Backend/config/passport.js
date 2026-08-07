@@ -8,13 +8,20 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: "/api/auth/google/callback",
+            callbackURL: process.env.GOOGLE_CALLBACK_URL || 
+                         (process.env.BACKEND_URL 
+                            ? `${process.env.BACKEND_URL}/api/auth/google/callback` 
+                            : "http://localhost:5000/api/auth/google/callback"),
             proxy: true,
         },
 
         async (accessToken, refreshToken, profile, done) => {
 
             try {
+
+                if (!profile.emails || profile.emails.length === 0) {
+                    return done(new Error("No email found in your Google profile"), null);
+                }
 
                 const email = profile.emails[0].value;
 
@@ -24,7 +31,7 @@ passport.use(
 
                     user = await User.create({
 
-                        name: profile.displayName,
+                        name: profile.displayName || "Google User",
 
                         email,
 

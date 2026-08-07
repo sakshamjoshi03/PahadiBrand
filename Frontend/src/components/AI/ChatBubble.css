@@ -29,6 +29,76 @@
     line-height: 1.65;
     font-size: 0.95rem;
     overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.chat-p {
+    margin-bottom: 0.75rem;
+}
+
+.chat-p:last-child {
+    margin-bottom: 0;
+}
+
+.chat-ul, .chat-ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
+}
+
+.chat-ul {
+    list-style-type: disc;
+}
+
+.chat-ol {
+    list-style-type: decimal;
+}
+
+.chat-ul li, .chat-ol li {
+    margin-bottom: 0.35rem;
+}
+
+.chat-h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding-bottom: 0.2rem;
+}
+
+.chat-h3 {
+    font-size: 1.15rem;
+    font-weight: 650;
+    margin-top: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+.chat-h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-top: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+
+.chat-hr {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+}
+
+.inline-code {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: #d23f31;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.chat-bubble.user .inline-code {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
 }
 
 .chat-bubble.assistant .bubble-content {

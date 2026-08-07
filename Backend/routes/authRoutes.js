@@ -78,24 +78,5 @@ router.get(
     }),
     googleCallback
 );
-// GOOGLE LOGIN
-
-router.get(
-    "/google",
-    passport.authenticate("google", {
-        scope: ["profile", "email"]
-    })
-);
-
-// GOOGLE CALLBACK
-
-router.get(
-    "/google/callback",
-    passport.authenticate("google", {
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL ? `${process.env.FRONTEND_URL}/login` : "http://localhost:5173/login"
-    }),
-    googleCallback
-);
 
 module.exports = router;
