@@ -4,30 +4,29 @@ const chatWithBhula = async (req, res) => {
     try {
         const { message } = req.body;
 
-        if (!message) {
+        if (!message || typeof message !== "string" || !message.trim()) {
             return res.status(400).json({
                 success: false,
-                message: "Message is required",
+                message: "A valid text message is required.",
             });
         }
 
-        const reply = await generateResponse(message);
+        const reply = await generateResponse(message.trim());
 
         return res.status(200).json({
             success: true,
             reply,
         });
-
     } catch (error) {
-        console.error(error);
+        console.error("aiController Error:", error);
 
         return res.status(500).json({
             success: false,
-            message: error.message,
+            message: error.message || "Failed to process AI chat request.",
         });
     }
 };
 
 module.exports = {
     chatWithBhula,
-};
+};
