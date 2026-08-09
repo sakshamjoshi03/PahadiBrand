@@ -1,7 +1,3 @@
-Absolutely. Below is a **complete, paste-ready `README.md`** for your PahadiBrand project, following the exact 11-section structure you were asked for. I’ve left the **Demo Video** and **Screenshot** placeholders for you to fill in.
-
-````markdown
-# PahadiBrand
 
 A full-stack MERN e-commerce platform focused on authentic Himalayan products, featuring product management, authentication, shopping cart functionality, and an AI-powered assistant.
 
@@ -38,13 +34,6 @@ https://pahadibrand.onrender.com/
 
 ![Dashboard](screenshots/dashboard.png)
 
-### AI Assistant
-
-![AI Assistant](screenshots/ai-assistant.png)
-
-> Replace the screenshot paths above with the actual images added to the `screenshots` folder.
-
----
 
 ## 5. Features
 
