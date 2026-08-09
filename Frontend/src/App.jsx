@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AppRouter from "./router/AppRouter";
 import { NotificationProvider } from "./components/UI/NotificationProvider";
+import { CartProvider } from "./context/CartContext";
 
 
 function App() {
@@ -30,18 +31,20 @@ function App() {
 
   return (
     <NotificationProvider>
-      <div className={darkMode ? "dark-theme" : "light-theme"}>
-        <Navbar
-          darkMode={darkMode}
-          toggleTheme={toggleTheme}
-        />
+      <CartProvider>
+        <div className={darkMode ? "dark-theme" : "light-theme"}>
+          <Navbar
+            darkMode={darkMode}
+            toggleTheme={toggleTheme}
+          />
 
-        <main id="main-content" className="app-main">
-          <AppRouter />
-        </main>
+          <main id="main-content" className="app-main">
+            <AppRouter />
+          </main>
 
-        <Footer />
-      </div>
+          <Footer />
+        </div>
+      </CartProvider>
     </NotificationProvider>
   );
 }

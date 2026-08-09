@@ -19,11 +19,13 @@ import {
   Sparkles
 } from "lucide-react";
 import { useNotifications } from "./UI/NotificationProvider";
+import { useCart } from "../context/CartContext";
 import "./Navbar.css";
 
 function Navbar({ darkMode, toggleTheme }) {
   const navigate = useNavigate();
   const { addNotification } = useNotifications();
+  const { cartCount } = useCart();
   const [searchParams] = useSearchParams();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -134,8 +136,18 @@ function Navbar({ darkMode, toggleTheme }) {
               />
             </div>
 
-            <button type="button" className="cart-btn" aria-label="View cart" title="View cart">
+            <button
+              type="button"
+              className="cart-btn"
+              aria-label={`View cart (${cartCount} items)`}
+              title={`Cart (${cartCount} items)`}
+            >
               <ShoppingCart size={20} />
+              {cartCount > 0 && (
+                <span className="cart-badge" key={cartCount}>
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
             </button>
 
             {/* Theme Toggle */}

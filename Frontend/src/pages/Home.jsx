@@ -137,11 +137,12 @@ export default function Home() {
 
                             <div
                                 key={product._id}
+                                className="product-card-item"
                                 onClick={() => navigate(`/products/${product._id}`)}
-                                style={{ cursor: "pointer" }}
                             >
 
                                 <Card
+                                    product={product}
                                     image={
                                         product.images?.find(
                                             (img) => img.isPrimary
