@@ -136,8 +136,8 @@ function Navbar({ darkMode, toggleTheme }) {
               />
             </div>
 
-            <button
-              type="button"
+            <Link
+              to="/cart"
               className="cart-btn"
               aria-label={`View cart (${cartCount} items)`}
               title={`Cart (${cartCount} items)`}
@@ -148,7 +148,7 @@ function Navbar({ darkMode, toggleTheme }) {
                   {cartCount > 99 ? "99+" : cartCount}
                 </span>
               )}
-            </button>
+            </Link>
 
             {/* Theme Toggle */}
             <button
@@ -289,6 +289,22 @@ function Navbar({ darkMode, toggleTheme }) {
             </div>
             <span className="side-nav-text">AI Assistant (Bhula)</span>
             <span className="side-ai-badge">AI</span>
+          </NavLink>
+
+          <NavLink
+            to="/cart"
+            className={({ isActive }) => `side-nav-item ${isActive ? "active" : ""}`}
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <div className="side-nav-icon-wrapper" style={{ position: "relative" }}>
+              <ShoppingCart size={20} />
+              {cartCount > 0 && (
+                <span className="cart-badge" style={{ top: "-6px", right: "-6px", fontSize: "9px", minWidth: "15px", height: "15px", border: "1px solid var(--bg)" }}>
+                  {cartCount > 99 ? "99+" : cartCount}
+                </span>
+              )}
+            </div>
+            <span className="side-nav-text">Shopping Cart</span>
           </NavLink>
 
           <NavLink

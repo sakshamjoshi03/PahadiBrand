@@ -11,6 +11,7 @@ import AdminRoute from "./AdminRoute";
 import OAuthSuccess from "../pages/OAuthSuccess/OAuthSuccess";
 import YourPahadiBhula from "../pages/YourPahadiBhula/YourPahadiBhula";
 import ProductManagement from "../pages/Admin/ProductManagement";
+import Cart from "../pages/Cart/Cart";
 
 function AppRouter({ darkMode }) {
   return (
@@ -34,6 +35,11 @@ function AppRouter({ darkMode }) {
       <Route
         path="/bhula"
         element={<YourPahadiBhula />}
+      />
+
+      <Route
+        path="/cart"
+        element={<Cart darkMode={darkMode} />}
       />
 
       <Route
