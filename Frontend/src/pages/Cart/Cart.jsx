@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import { useNotifications } from "../../components/UI/NotificationProvider";
+import { getProductById } from "../../services/productService";
 import { 
   Trash2, 
   Plus, 
@@ -20,6 +21,9 @@ export default function Cart({ darkMode }) {
   const navigate = useNavigate();
   const { cartItems, removeFromCart, updateQuantity, clearCart, cartCount } = useCart();
   const { addNotification } = useNotifications();
+
+  // Real-time backend enriched product data state
+  const [enrichedProducts, setEnrichedProducts] = useState({});
 
   // Simulated Checkout Stepper State: 'cart' | 'checkout' | 'success'
   const [checkoutStep, setCheckoutStep] = useState("cart");
@@ -53,11 +57,48 @@ export default function Cart({ darkMode }) {
     }).format(value);
   };
 
-  // Calculations
-  const subtotal = cartItems.reduce(
-    (total, item) => total + parsePrice(item.product?.price) * (item.quantity || 1),
-    0
-  );
+  // Fetch real-time product details from the backend (latest image URL, stock, price)
+  useEffect(() => {
+    let active = true;
+    const fetchLatestDetails = async () => {
+      if (cartItems.length === 0) return;
+      
+      const newEnriched = { ...enrichedProducts };
+      let updated = false;
+
+      for (const item of cartItems) {
+        const productId = item.product?._id || item.product?.id;
+        if (productId && !newEnriched[productId]) {
+          try {
+            const data = await getProductById(productId);
+            if (data && active) {
+              newEnriched[productId] = data;
+              updated = true;
+            }
+          } catch (err) {
+            console.error(`Failed to fetch product ${productId} in real-time:`, err);
+          }
+        }
+      }
+
+      if (updated && active) {
+        setEnrichedProducts(newEnriched);
+      }
+    };
+
+    fetchLatestDetails();
+
+    return () => {
+      active = false;
+    };
+  }, [cartItems]);
+
+  // Calculations (utilizing real-time pricing from backend)
+  const subtotal = cartItems.reduce((total, item) => {
+    const productId = item.product?._id || item.product?.id || item.product?.name || item.product?.title;
+    const realProduct = enrichedProducts[productId] || item.product;
+    return total + parsePrice(realProduct?.price) * (item.quantity || 1);
+  }, 0);
   
   const shippingThreshold = 1000;
   const shippingCost = subtotal >= shippingThreshold || subtotal === 0 ? 0 : 99;
@@ -65,10 +106,29 @@ export default function Cart({ darkMode }) {
 
   const getProductImage = (product) => {
     if (!product) return "/placeholder.jpg";
-    if (product.image) return product.image;
-    if (Array.isArray(product.images) && product.images.length > 0) return product.images[0];
-    if (product.images && typeof product.images === "string") return product.images;
-    return "/placeholder.jpg";
+    
+    let imageUrl = "";
+    
+    // Check if the backend images array is present and has items
+    if (Array.isArray(product.images) && product.images.length > 0) {
+      const primaryImg = product.images.find(img => img.isPrimary) || product.images[0];
+      imageUrl = primaryImg?.url || "";
+    } else if (product.image) {
+      imageUrl = product.image;
+    } else if (product.images && typeof product.images === "string") {
+      imageUrl = product.images;
+    }
+
+    if (!imageUrl) return "/placeholder.jpg";
+
+    // Prefix relative backend upload paths with backend server host url
+    if (imageUrl.startsWith("uploads/") || imageUrl.startsWith("/uploads/")) {
+      const backendHost = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const cleanPath = imageUrl.startsWith("/") ? imageUrl : `/${imageUrl}`;
+      return `${backendHost}${cleanPath}`;
+    }
+
+    return imageUrl;
   };
 
   const handleQuantityDecrement = (item) => {
@@ -164,9 +224,10 @@ export default function Cart({ darkMode }) {
                 <div className="cart-list">
                   {cartItems.map((item, index) => {
                     const productId = item.product?._id || item.product?.id || item.product?.name || item.product?.title;
-                    const name = item.product?.name || item.product?.title || "Pahadi Product";
-                    const price = parsePrice(item.product?.price);
-                    const imageSrc = getProductImage(item.product);
+                    const realProduct = enrichedProducts[productId] || item.product;
+                    const name = realProduct?.name || realProduct?.title || "Pahadi Product";
+                    const price = parsePrice(realProduct?.price);
+                    const imageSrc = getProductImage(realProduct);
 
                     return (
                       <div key={productId || index} className="cart-item-card">
@@ -435,11 +496,14 @@ export default function Cart({ darkMode }) {
                 <h2>Your Order</h2>
                 <div className="checkout-summary-items">
                   {cartItems.map((item, idx) => {
-                    const price = parsePrice(item.product?.price);
+                    const productId = item.product?._id || item.product?.id || item.product?.name || item.product?.title;
+                    const realProduct = enrichedProducts[productId] || item.product;
+                    const price = parsePrice(realProduct?.price);
+                    const name = realProduct?.name || "Product";
                     return (
                       <div key={idx} className="checkout-summary-item">
                         <span className="summary-item-name-qty">
-                          {item.product?.name || "Product"} <span className="summary-item-qty">x{item.quantity}</span>
+                          {name} <span className="summary-item-qty">x{item.quantity}</span>
                         </span>
                         <span className="summary-item-total">{formatPrice(price * item.quantity)}</span>
                       </div>
