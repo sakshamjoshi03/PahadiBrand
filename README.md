@@ -13,11 +13,7 @@ https://pahadibrand.onrender.com/
 
 ---
 
-## 3. Demo Video
-
-🎥 **Demo Video:**  
-[https://youtu.be/GXRXzxK_Zi0?si=x2GrZpguoDgk4F4r]
-
+## 3. Demo:tbd
 ---
 
 ## 4. Screenshots
